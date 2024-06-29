@@ -20,6 +20,7 @@ public class GameScene : BaseScene
 
     private void Start()
     {
+        Managers.Input.CursorLocked = true;
         Managers.Sound.Play(SoundType.BGM, SceneSettings.Instance[SceneType].BGM);
     }
 }
