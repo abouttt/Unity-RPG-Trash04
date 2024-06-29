@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class InputManager : GameControls.IPlayerActions
 {
+    public Vector2 Move { get; private set; }
+    public bool Jump { get; private set; }
+
     public bool CursorLocked
     {
         get => _cursorLocked;
@@ -70,6 +73,16 @@ public class InputManager : GameControls.IPlayerActions
     public void Clear()
     {
         Enabled = false;
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        Move = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        Jump = context.ReadValueAsButton();
     }
 
     private void SetCursorState(bool newState)
