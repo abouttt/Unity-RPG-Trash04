@@ -21,7 +21,7 @@ public class CharacterMovement : MonoBehaviour
 
     [field: Header("[Rotation]")]
     [field: SerializeField]
-    public float RotationSmoothTime { get; set; }
+    public float RotationSpeed { get; set; }
 
     [Header("[Jump]")]
     [SerializeField]
@@ -164,7 +164,7 @@ public class CharacterMovement : MonoBehaviour
             _targetRotation = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + overrideYaw;
         }
 
-        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+        float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSpeed);
         transform.rotation = Quaternion.Euler(0f, rotation, 0f);
     }
 

@@ -2,55 +2,50 @@ using UnityEngine;
 
 public class ThirdPersonCamera : MonoBehaviour
 {
-    [Header("[Rotation]")]
-    [SerializeField]
-    private Transform _cinemachineCameraTarget;
+    [field: SerializeField]
+    public Transform CinemachineCameraTarget { get; set; }
 
-    [SerializeField]
-    private float _sensitivity;
+    [field: SerializeField]
+    public float Sensitivity { get; set; }
 
-    [SerializeField]
-    private float _topClamp;
+    [field: SerializeField]
+    public float TopClamp { get; set; }
 
-    [SerializeField]
-    private float _bottomClamp;
+    [field: SerializeField]
+    public float BottomClamp { get; set; }
 
-    private float _cinemachineTargetYaw;
+    private Quaternion _currentRotation;
     private float _cinemachineTargetPitch;
-    private readonly float _threshold = 0.01f;
+    private float _cinemachineTargetYaw;
 
     private void Start()
     {
-        _cinemachineTargetPitch = _cinemachineCameraTarget.rotation.eulerAngles.x;
-        _cinemachineTargetYaw = _cinemachineCameraTarget.rotation.eulerAngles.y;
+        _cinemachineTargetPitch = CinemachineCameraTarget.rotation.eulerAngles.x;
+        _cinemachineTargetYaw = CinemachineCameraTarget.rotation.eulerAngles.y;
     }
 
-    public void Rotate()
+    public void Rotate(float pitch, float yaw)
     {
-        var look = Managers.Input.Look;
-        if (look.sqrMagnitude >= _threshold)
-        {
-            _cinemachineTargetYaw += look.x * _sensitivity;
-            _cinemachineTargetPitch += look.y * _sensitivity;
-        }
-
-        _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, _bottomClamp, _topClamp);
-        _cinemachineTargetYaw = ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
-        _cinemachineCameraTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
+        _cinemachineTargetPitch += pitch * Sensitivity;
+        _cinemachineTargetYaw += yaw * Sensitivity;
+        ClampAngleAndRotate();
     }
 
-    private float ClampAngle(float lfAngle, float lfMin, float lfMax)
+    public void LookRotate(Vector3 direction, float speed)
     {
-        if (lfAngle > 180f)
-        {
-            return lfAngle - 360f;
-        }
+        var lookRotation = Quaternion.LookRotation(direction - CinemachineCameraTarget.position);
+        var rotation = Quaternion.Slerp(_currentRotation, lookRotation, speed * Time.deltaTime);
+        var euler = rotation.eulerAngles;
+        _cinemachineTargetPitch = euler.x;
+        _cinemachineTargetYaw = euler.y;
+        ClampAngleAndRotate();
+    }
 
-        if (lfAngle < -180f)
-        {
-            return lfAngle + 360f;
-        }
-
-        return Mathf.Clamp(lfAngle, lfMin, lfMax);
+    private void ClampAngleAndRotate()
+    {
+        _cinemachineTargetPitch = Util.ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+        _cinemachineTargetYaw = Util.ClampAngle(_cinemachineTargetYaw, float.MinValue, float.MaxValue);
+        _currentRotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, 0f);
+        CinemachineCameraTarget.rotation = _currentRotation;
     }
 }
