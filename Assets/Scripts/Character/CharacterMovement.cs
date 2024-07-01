@@ -20,7 +20,7 @@ public class CharacterMovement : MonoBehaviour
     public float SpeedChangeRate { get; set; }
 
     [field: Header("[Rotation]")]
-    [field: SerializeField]
+    [field: SerializeField, Range(0f, 0.3f)]
     public float RotationSpeed { get; set; }
 
     [Header("[Jump]")]
@@ -65,8 +65,6 @@ public class CharacterMovement : MonoBehaviour
 
     public void Gravity()
     {
-        float deltaTime = Time.deltaTime;
-
         if (IsGrounded)
         {
             // 추락 제한시간 리셋
@@ -83,7 +81,7 @@ public class CharacterMovement : MonoBehaviour
             // 점프 제한시간
             if (_jumpTimeoutDelta >= 0f)
             {
-                _jumpTimeoutDelta -= deltaTime;
+                _jumpTimeoutDelta -= Time.deltaTime;
             }
         }
         else
@@ -94,7 +92,7 @@ public class CharacterMovement : MonoBehaviour
             // 추락 제한시간
             if (_fallTimeoutDelta >= 0f)
             {
-                _fallTimeoutDelta -= deltaTime;
+                _fallTimeoutDelta -= Time.deltaTime;
             }
             else
             {
@@ -106,30 +104,27 @@ public class CharacterMovement : MonoBehaviour
         // 터미널 아래에 있는 경우 시간에 따라 중력을 적용
         if (_verticalVelocity < _terminalVelocity)
         {
-            _verticalVelocity += _gravity * deltaTime;
+            _verticalVelocity += _gravity * Time.deltaTime;
         }
     }
 
-    public void MoveAndRotate(Vector2 direction, float overrideYaw = 0f)
+    public void MoveAndRotate(Vector3 direction, float overrideYaw = 0f)
     {
         Move(direction, overrideYaw);
         Rotate(direction, overrideYaw);
     }
 
-    public void Move(Vector2 direction, float overrideYaw = 0f)
+    public void Move(Vector3 direction, float overrideYaw = 0f)
     {
-        direction.Normalize();
         float targetSpeed = MoveSpeed;
-        bool isZeroDirection = direction == Vector2.zero;
-        float deltaTime = Time.deltaTime;
 
-        if (isZeroDirection)
+        if (direction == Vector3.zero)
         {
             targetSpeed = 0f;
         }
 
         float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z).magnitude;
-        float currentSpeedChangeRate = SpeedChangeRate * deltaTime;
+        float currentSpeedChangeRate = SpeedChangeRate * Time.deltaTime;
         float speedOffset = 0.1f;
 
         // 목표 속도까지 가감속
@@ -137,8 +132,6 @@ public class CharacterMovement : MonoBehaviour
             currentHorizontalSpeed > targetSpeed + speedOffset)
         {
             _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed, currentSpeedChangeRate);
-
-            // 속도를 소수점 이하 3자리까지 반올림
             _speed = Mathf.Round(_speed * 1000f) / 1000f;
         }
         else
@@ -146,22 +139,20 @@ public class CharacterMovement : MonoBehaviour
             _speed = targetSpeed;
         }
 
-        if (!isZeroDirection)
+        if (direction != Vector3.zero)
         {
-            _targetMove = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + overrideYaw;
+            _targetMove = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + overrideYaw;
         }
 
         var targetDirection = Quaternion.Euler(0f, _targetMove, 0f) * Vector3.forward;
-        _controller.Move(targetDirection.normalized * (_speed * deltaTime) + new Vector3(0f, _verticalVelocity, 0f) * deltaTime);
+        _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0f, _verticalVelocity, 0f) * Time.deltaTime);
     }
 
-    public void Rotate(Vector2 direction, float overrideYaw = 0f)
+    public void Rotate(Vector3 direction, float overrideYaw = 0f)
     {
-        direction.Normalize();
-
-        if (direction != Vector2.zero)
+        if (direction != Vector3.zero)
         {
-            _targetRotation = Mathf.Atan2(direction.x, direction.y) * Mathf.Rad2Deg + overrideYaw;
+            _targetRotation = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + overrideYaw;
         }
 
         float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSpeed);
