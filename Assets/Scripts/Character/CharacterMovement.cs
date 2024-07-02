@@ -16,6 +16,9 @@ public class CharacterMovement : MonoBehaviour
     [field: SerializeField, ReadOnly]
     public bool IsFalling { get; private set; }
 
+    [field: SerializeField, ReadOnly]
+    public bool IsLanding { get; private set; }
+
     [field: Header("[Move]")]
     [field: SerializeField]
     public float MoveSpeed { get; set; }
@@ -40,6 +43,9 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float _fallTimeout;
 
+    [SerializeField]
+    private float _landTimeout;
+
     [Header("[Grounded]")]
     [SerializeField]
     private float _groundedOffset = -0.14f;
@@ -59,6 +65,7 @@ public class CharacterMovement : MonoBehaviour
 
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
+    private float _landTimeoutDelta;
 
     private CharacterController _controller;
 
@@ -74,12 +81,26 @@ public class CharacterMovement : MonoBehaviour
             // 추락 제한시간 리셋
             _fallTimeoutDelta = _fallTimeout;
 
-            IsFalling = false;
+            if (IsFalling)
+            {
+                IsFalling = false;
+                IsLanding = true;
+            }
 
             // 착지했을 때 속도가 무한히 떨어지는 것을 방지
             if (_verticalVelocity < 0f)
             {
                 _verticalVelocity = -2f;
+            }
+
+            // 착지 제한시간
+            if (_landTimeoutDelta >= 0f)
+            {
+                _landTimeoutDelta -= Time.deltaTime;
+            }
+            else
+            {
+                IsLanding = false;
             }
 
             // 점프 제한시간
@@ -102,6 +123,8 @@ public class CharacterMovement : MonoBehaviour
             {
                 IsJumping = false;
                 IsFalling = true;
+
+                _landTimeoutDelta = _landTimeout;
             }
         }
 

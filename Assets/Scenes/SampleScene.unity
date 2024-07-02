@@ -637,6 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _runSpeed: 3
   _sprintSpeed: 5
+  _landSpeed: 1.5
   _lockOnRotationSpeed: 5
 --- !u!143 &1025324155
 CharacterController:
@@ -679,6 +680,7 @@ MonoBehaviour:
   <IsGrounded>k__BackingField: 1
   <IsJumping>k__BackingField: 0
   <IsFalling>k__BackingField: 0
+  <IsLanding>k__BackingField: 0
   <MoveSpeed>k__BackingField: 0
   <SpeedChangeRate>k__BackingField: 10
   <RotationSpeed>k__BackingField: 0.075
@@ -686,6 +688,7 @@ MonoBehaviour:
   _gravity: -20
   _jumpTimeout: 0.5
   _fallTimeout: 0.4
+  _landTimeout: 0.55
   _groundedOffset: -0.14
   _groundedRadius: 0.28
   _groundLayers:

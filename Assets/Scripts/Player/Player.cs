@@ -9,6 +9,9 @@ public class Player : MonoBehaviour
     private float _sprintSpeed;
 
     [SerializeField]
+    private float _landSpeed;
+
+    [SerializeField]
     private float _lockOnRotationSpeed;
 
     private GameObject _mainCamera;
@@ -90,6 +93,7 @@ public class Player : MonoBehaviour
         var inputDirection = new Vector3(move.x, 0f, move.y).normalized;
         float cameraYaw = _mainCamera.transform.eulerAngles.y;
 
+        _movement.MoveSpeed = _movement.IsLanding ? _landSpeed : Managers.Input.Sprint ? _sprintSpeed : _runSpeed;
         _movement.Move(inputDirection, cameraYaw);
 
         if (_lockOn.IsLockOn && IsOnlyRun())
@@ -115,6 +119,6 @@ public class Player : MonoBehaviour
 
     private bool IsOnlyRun()
     {
-        return !(Managers.Input.Sprint || _movement.IsJumping || _movement.IsFalling);
+        return !(Managers.Input.Sprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 }
