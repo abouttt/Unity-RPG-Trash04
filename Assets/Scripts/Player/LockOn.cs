@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LockOn : MonoBehaviour
@@ -31,7 +32,7 @@ public class LockOn : MonoBehaviour
 
     private Transform _target;
 
-    public void FindTarget(Transform start)
+    public void FindTarget(Transform start, Predicate<Transform> otherCheckLogic = null)
     {
         float shortestAngle = Mathf.Infinity;
         Transform finalTarget = null;
@@ -42,12 +43,7 @@ public class LockOn : MonoBehaviour
             var directionToTarget = (target.transform.position - start.position).normalized;
             float viewAngle = Vector3.Angle(start.forward, directionToTarget);
 
-            if (viewAngle < MinViewAngle || viewAngle > MaxViewAngle)
-            {
-                continue;
-            }
-
-            if (viewAngle >= shortestAngle)
+            if (viewAngle < MinViewAngle || viewAngle > MaxViewAngle || viewAngle >= shortestAngle)
             {
                 continue;
             }
@@ -58,6 +54,11 @@ public class LockOn : MonoBehaviour
             }
 
             if (Physics.Linecast(start.position, target.transform.position, ObstacleMask))
+            {
+                continue;
+            }
+
+            if (otherCheckLogic == null || !otherCheckLogic(target.transform))
             {
                 continue;
             }

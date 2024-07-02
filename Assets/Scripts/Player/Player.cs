@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _lockOnRotationSpeed;
 
-    private GameObject _mainCamera;
+    private Camera _mainCamera;
     private Animator _animator;
     private CharacterMovement _movement;
     private ThirdPersonCamera _camera;
@@ -31,19 +31,17 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _mainCamera = Camera.main.gameObject;
+        _mainCamera = Camera.main;
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
         _camera = GetComponent<ThirdPersonCamera>();
         _lockOn = GetComponent<LockOn>();
-
-        _movement.MoveSpeed = _runSpeed;
     }
 
     private void Start()
     {
         _lockOnUI = Managers.Resource.Instantiate<UI_LockOn>("UI_LockOn.prefab");
-
+        _movement.MoveSpeed = _runSpeed;
         InitInputActions();
     }
 
@@ -125,7 +123,13 @@ public class Player : MonoBehaviour
             }
             else
             {
-                _lockOn.FindTarget(_mainCamera.transform);
+                _lockOn.FindTarget(_mainCamera.transform, target =>
+                {
+                    // 타겟이 절두체 안에 있는지 확인
+                    var planes = GeometryUtility.CalculateFrustumPlanes(_mainCamera);
+                    var bounds = target.GetComponent<Collider>().bounds;
+                    return GeometryUtility.TestPlanesAABB(planes, bounds);
+                });
             }
 
             _lockOnUI.Target = _lockOn.Target;
