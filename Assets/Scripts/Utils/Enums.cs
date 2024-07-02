@@ -26,4 +26,6 @@ public enum SceneType
 public enum AddressableLabel
 {
     Default,
+    Game_Prefab,
+    Game_UI,
 }

@@ -15,6 +15,7 @@ public class GameScene : BaseScene
     {
         base.Init();
 
+        InstantiatePackage("GameUIPackage.prefab");
         Managers.Input.Enabled = true;
     }
 

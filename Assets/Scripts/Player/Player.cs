@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private CharacterMovement _movement;
     private ThirdPersonCamera _camera;
     private LockOn _lockOn;
+    private UI_LockOn _lockOnUI;
 
     // animation IDs
     private readonly int _animIDSpeed = Animator.StringToHash("Speed");
@@ -41,24 +42,9 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Managers.Input.GetAction("Jump").performed += context =>
-        {
-            _movement.Jump();
-            _animator.SetTrigger(_animIDJump);
-        };
-        Managers.Input.GetAction("Sprint").started += context => _movement.MoveSpeed = _sprintSpeed;
-        Managers.Input.GetAction("Sprint").canceled += context => _movement.MoveSpeed = _runSpeed;
-        Managers.Input.GetAction("LockOn").performed += context =>
-        {
-            if (_lockOn.IsLockOn)
-            {
-                _lockOn.Target = null;
-            }
-            else
-            {
-                _lockOn.FindTarget(_mainCamera.transform);
-            }
-        };
+        _lockOnUI = Managers.Resource.Instantiate<UI_LockOn>("UI_LockOn.prefab");
+
+        InitInputActions();
     }
 
     private void Update()
@@ -98,7 +84,7 @@ public class Player : MonoBehaviour
 
         if (_lockOn.IsLockOn && IsOnlyRun())
         {
-            Vector3 rotationDirection = inputDirection == Vector3.zero
+            var rotationDirection = inputDirection == Vector3.zero
                 ? Vector3.zero
                 : (_lockOn.Target.position - transform.position).normalized;
             _movement.Rotate(rotationDirection);
@@ -120,5 +106,29 @@ public class Player : MonoBehaviour
     private bool IsOnlyRun()
     {
         return !(Managers.Input.Sprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
+    }
+
+    private void InitInputActions()
+    {
+        Managers.Input.GetAction("Jump").performed += context =>
+        {
+            _movement.Jump();
+            _animator.SetTrigger(_animIDJump);
+        };
+        Managers.Input.GetAction("Sprint").started += context => _movement.MoveSpeed = _sprintSpeed;
+        Managers.Input.GetAction("Sprint").canceled += context => _movement.MoveSpeed = _runSpeed;
+        Managers.Input.GetAction("LockOn").performed += context =>
+        {
+            if (_lockOn.IsLockOn)
+            {
+                _lockOn.Target = null;
+            }
+            else
+            {
+                _lockOn.FindTarget(_mainCamera.transform);
+            }
+
+            _lockOnUI.Target = _lockOn.Target;
+        };
     }
 }

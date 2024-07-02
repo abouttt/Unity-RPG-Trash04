@@ -18,13 +18,11 @@ MonoBehaviour:
       Value:
         <ResourcesLoadLabels>k__BackingField: 00000000
         <ReloadSceneWhenNoResources>k__BackingField: 0
-        <ClearResourcesAfterScene>k__BackingField: 0
-        <BackgroundImage>k__BackingField: {fileID: 0}
-        <SceneBGM>k__BackingField: {fileID: 0}
+        <Background>k__BackingField: {fileID: 0}
+        <BGM>k__BackingField: {fileID: 0}
     - Key: 2
       Value:
-        <ResourcesLoadLabels>k__BackingField: 00000000
+        <ResourcesLoadLabels>k__BackingField: 000000000100000002000000
         <ReloadSceneWhenNoResources>k__BackingField: 1
-        <ClearResourcesAfterScene>k__BackingField: 1
-        <BackgroundImage>k__BackingField: {fileID: 0}
-        <SceneBGM>k__BackingField: {fileID: 0}
+        <Background>k__BackingField: {fileID: 0}
+        <BGM>k__BackingField: {fileID: 0}

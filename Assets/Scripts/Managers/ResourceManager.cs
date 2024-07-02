@@ -100,6 +100,12 @@ public class ResourceManager
         return go;
     }
 
+    public T Instantiate<T>(string key, Transform parent = null, bool pooling = false) where T : Component
+    {
+        var go = Instantiate(key, parent, pooling);
+        return go.GetComponent<T>();
+    }
+
     public void Destroy(GameObject go)
     {
         if (go == null)
