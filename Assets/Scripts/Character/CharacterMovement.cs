@@ -112,12 +112,6 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    public void MoveAndRotate(Vector3 direction, float overrideYaw = 0f)
-    {
-        Move(direction, overrideYaw);
-        Rotate(direction, overrideYaw);
-    }
-
     public void Move(Vector3 direction, float overrideYaw = 0f)
     {
         float targetSpeed = MoveSpeed;

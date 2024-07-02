@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     private readonly int _animIDSpeed = Animator.StringToHash("Speed");
     private readonly int _animIDPosX = Animator.StringToHash("PosX");
     private readonly int _animIDPosY = Animator.StringToHash("PosY");
+    private readonly int _animIDGrounded = Animator.StringToHash("Grounded");
+    private readonly int _animIDJump = Animator.StringToHash("Jump");
+    private readonly int _animIDFall = Animator.StringToHash("Fall");
 
     private void Awake()
     {
@@ -35,7 +38,11 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        Managers.Input.GetAction("Jump").performed += context => _movement.Jump();
+        Managers.Input.GetAction("Jump").performed += context =>
+        {
+            _movement.Jump();
+            _animator.SetTrigger(_animIDJump);
+        };
         Managers.Input.GetAction("Sprint").started += context => _movement.MoveSpeed = _sprintSpeed;
         Managers.Input.GetAction("Sprint").canceled += context => _movement.MoveSpeed = _runSpeed;
         Managers.Input.GetAction("LockOn").performed += context =>
@@ -54,7 +61,11 @@ public class Player : MonoBehaviour
     private void Update()
     {
         _movement.Gravity();
+        _animator.SetBool(_animIDFall, _movement.IsFalling);
+
         _movement.CheckGrounded();
+        _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
+
         HandleMovement();
         UpdateAnimatorParameters();
     }

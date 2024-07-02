@@ -635,8 +635,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ec4bca4b0410e408cb6fd3a5031cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _runSpeed: 5
-  _sprintSpeed: 9
+  _runSpeed: 3
+  _sprintSpeed: 5
   _lockOnRotationSpeed: 5
 --- !u!143 &1025324155
 CharacterController:
@@ -679,7 +679,7 @@ MonoBehaviour:
   <IsGrounded>k__BackingField: 1
   <IsJumping>k__BackingField: 0
   <IsFalling>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 5
+  <MoveSpeed>k__BackingField: 0
   <SpeedChangeRate>k__BackingField: 10
   <RotationSpeed>k__BackingField: 0.075
   _jumpHeight: 1.2
