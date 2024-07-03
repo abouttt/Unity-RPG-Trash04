@@ -84,4 +84,14 @@ public static class Util
 
         return Mathf.Clamp(lfAngle, lfMin, lfMax);
     }
+
+    public static bool CheckLayers(GameObject go, LayerMask layerMask)
+    {
+        if ((layerMask.value & (1 << go.layer)) == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

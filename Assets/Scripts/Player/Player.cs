@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private CharacterMovement _movement;
     private ThirdPersonCamera _thirdPersonCamera;
     private LockOn _lockOn;
+    private Interactor _interactor;
     private UI_LockOn _lockOnUI;
 
     // animation IDs
@@ -36,6 +37,7 @@ public class Player : MonoBehaviour
         _movement = GetComponent<CharacterMovement>();
         _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
         _lockOn = GetComponent<LockOn>();
+        _interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Start()
@@ -134,5 +136,7 @@ public class Player : MonoBehaviour
 
             _lockOnUI.Target = _lockOn.Target;
         };
+        Managers.Input.GetAction("Interact").performed += context => _interactor.Interact = true;
+        Managers.Input.GetAction("Interact").canceled += context => _interactor.Interact = false;
     }
 }

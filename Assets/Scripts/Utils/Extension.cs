@@ -21,4 +21,9 @@ public static class Extension
     {
         return Util.GetStringAfterLastSlash(str);
     }
+
+    public static bool CheckLayers(this GameObject go, LayerMask layerMask)
+    {
+        return Util.CheckLayers(go, layerMask);
+    }
 }
