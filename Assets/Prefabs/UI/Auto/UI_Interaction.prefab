@@ -105,8 +105,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6366284244716189261}
-  - component: {fileID: 3611447123163910270}
-  - component: {fileID: 7451083364481409728}
+  - component: {fileID: 4223432699136068402}
+  - component: {fileID: 2692079568062969786}
   m_Layer: 5
   m_Name: Body
   m_TagString: Untagged
@@ -139,7 +139,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3611447123163910270
+--- !u!114 &4223432699136068402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7451083364481409728
+--- !u!114 &2692079568062969786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <UIType>k__BackingField: 0
-  _body: {fileID: 480732651578403143}
+  Body: {fileID: 0}
 --- !u!114 &1494828259010034419
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,11 +30,17 @@ public class UI_Interaction : UI_Auto
         GetText((int)Texts.KeyText).text = Managers.Input.GetBindingPath("Interact");
     }
 
-    private void Update()
+    protected override void Start()
+    {
+        base.Start();
+
+        _interactor.TargetChanged += target => SetTarget(target);
+    }
+
+    private void LateUpdate()
     {
         if (_interactor.Target == null)
         {
-            Body.SetActive(false);
             return;
         }
 
@@ -44,7 +50,7 @@ public class UI_Interaction : UI_Auto
         }
         else if (!Body.activeSelf)
         {
-            SetTarget(_interactor.Target);
+            Body.SetActive(true);
         }
 
         if (GetImage((int)Images.LoadingTimeImage).isActiveAndEnabled)
@@ -55,19 +61,22 @@ public class UI_Interaction : UI_Auto
 
     private void SetTarget(Interactable target)
     {
-        _followTarget.SetTargetAndOffset(target.transform, target.UIOffset);
+        if (target != null)
+        {
+            _followTarget.SetTargetAndOffset(target.transform, target.UIOffset);
 
-        bool canInteract = target.CanInteract;
-        GetImage((int)Images.BG).gameObject.SetActive(canInteract);
-        GetText((int)Texts.KeyText).gameObject.SetActive(canInteract);
-        GetText((int)Texts.InteractionText).gameObject.SetActive(canInteract);
-        GetText((int)Texts.InteractionText).text = target.InteractionMessage;
-        GetText((int)Texts.NameText).text = target.InteractionName;
+            bool canInteract = target.CanInteract;
+            GetImage((int)Images.BG).gameObject.SetActive(canInteract);
+            GetText((int)Texts.KeyText).gameObject.SetActive(canInteract);
+            GetText((int)Texts.InteractionText).gameObject.SetActive(canInteract);
+            GetText((int)Texts.InteractionText).text = target.InteractionMessage;
+            GetText((int)Texts.NameText).text = target.InteractionName;
 
-        bool hasLoadingtime = target.LoadingTime > 0f;
-        GetImage((int)Images.LoadingTimeImage).gameObject.SetActive(hasLoadingtime);
-        GetImage((int)Images.Frame).gameObject.SetActive(hasLoadingtime);
+            bool hasLoadingtime = target.LoadingTime > 0f;
+            GetImage((int)Images.LoadingTimeImage).gameObject.SetActive(hasLoadingtime);
+            GetImage((int)Images.Frame).gameObject.SetActive(hasLoadingtime);
+        }
 
-        Body.SetActive(true);
+        Body.SetActive(target != null);
     }
 }

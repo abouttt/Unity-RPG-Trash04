@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Interactor : MonoBehaviour
 {
+    public event Action<Interactable> TargetChanged;
+
     public Interactable Target
     {
         get => _target;
@@ -17,6 +20,7 @@ public class Interactor : MonoBehaviour
                 _target.IsDetected = false;
             }
 
+            ProgressedLoadingTime = 0f;
             _target = value;
             _isTargetRangeOut = false;
             _canInteract = false;
@@ -25,6 +29,8 @@ public class Interactor : MonoBehaviour
             {
                 _target.IsDetected = true;
             }
+
+            TargetChanged?.Invoke(_target);
         }
     }
 
