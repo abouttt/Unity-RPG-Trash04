@@ -64,15 +64,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""CursorToggle"",
-                    ""type"": ""Button"",
-                    ""id"": ""80176954-fa22-4df9-84ab-3f8db7650913"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""LockOn"",
                     ""type"": ""Button"",
                     ""id"": ""63fb3d41-4fe7-4d30-8147-de43c1dcf6b2"",
@@ -85,6 +76,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""5d7ac225-d219-48e8-8b8a-7716c45daa5e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CursorToggle"",
+                    ""type"": ""Button"",
+                    ""id"": ""80176954-fa22-4df9-84ab-3f8db7650913"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -171,17 +171,6 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""126bbc37-879f-4751-b7a0-c82598b03484"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard/Mouse"",
-                    ""action"": ""CursorToggle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""679bf79e-0dec-41bc-a76f-cf496222b4c3"",
                     ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
@@ -210,6 +199,17 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard/Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""126bbc37-879f-4751-b7a0-c82598b03484"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""CursorToggle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -241,9 +241,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_CursorToggle = m_Player.FindAction("CursorToggle", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -309,9 +309,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_CursorToggle;
     private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_CursorToggle;
     public struct PlayerActions
     {
         private @GameControls m_Wrapper;
@@ -320,9 +320,9 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @CursorToggle => m_Wrapper.m_Player_CursorToggle;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -344,15 +344,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @CursorToggle.started += instance.OnCursorToggle;
-            @CursorToggle.performed += instance.OnCursorToggle;
-            @CursorToggle.canceled += instance.OnCursorToggle;
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @CursorToggle.started += instance.OnCursorToggle;
+            @CursorToggle.performed += instance.OnCursorToggle;
+            @CursorToggle.canceled += instance.OnCursorToggle;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -369,15 +369,15 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @CursorToggle.started -= instance.OnCursorToggle;
-            @CursorToggle.performed -= instance.OnCursorToggle;
-            @CursorToggle.canceled -= instance.OnCursorToggle;
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @CursorToggle.started -= instance.OnCursorToggle;
+            @CursorToggle.performed -= instance.OnCursorToggle;
+            @CursorToggle.canceled -= instance.OnCursorToggle;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -410,8 +410,8 @@ public partial class @GameControls: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnCursorToggle(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnCursorToggle(InputAction.CallbackContext context);
     }
 }

@@ -23,6 +23,7 @@ public class Managers : Singleton<Managers>
     {
         base.Awake();
 
+        _input.Init();
         _pool.Init();
         _resource.Init();
         _sound.Init();
@@ -31,7 +32,6 @@ public class Managers : Singleton<Managers>
 
     public static void Clear()
     {
-        Input.Clear();
         Pool.Clear();
         Resource.Clear();
         Sound.Clear();

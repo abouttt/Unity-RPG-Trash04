@@ -42,15 +42,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CursorToggle",
-                    "type": "Button",
-                    "id": "80176954-fa22-4df9-84ab-3f8db7650913",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "LockOn",
                     "type": "Button",
                     "id": "63fb3d41-4fe7-4d30-8147-de43c1dcf6b2",
@@ -63,6 +54,15 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "5d7ac225-d219-48e8-8b8a-7716c45daa5e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CursorToggle",
+                    "type": "Button",
+                    "id": "80176954-fa22-4df9-84ab-3f8db7650913",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -149,17 +149,6 @@
                 },
                 {
                     "name": "",
-                    "id": "126bbc37-879f-4751-b7a0-c82598b03484",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard/Mouse",
-                    "action": "CursorToggle",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "679bf79e-0dec-41bc-a76f-cf496222b4c3",
                     "path": "<Mouse>/middleButton",
                     "interactions": "",
@@ -188,6 +177,17 @@
                     "processors": "",
                     "groups": "Keyboard/Mouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "126bbc37-879f-4751-b7a0-c82598b03484",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "CursorToggle",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

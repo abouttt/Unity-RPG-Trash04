@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, GameControls.IPlayerActions
 {
     public static LockOn LockOn { get; private set; }
     public static Interactor Interactor { get; private set; }
@@ -16,6 +17,10 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float _lockOnRotationSpeed;
+
+    private Vector2 _move;
+    private Vector2 _look;
+    private bool _isPressedSprint;
 
     private Camera _mainCamera;
     private Animator _animator;
@@ -46,17 +51,24 @@ public class Player : MonoBehaviour
         Managers.Resource.Instantiate<UI_LockOn>("UI_LockOn.prefab");
 
         _movement.MoveSpeed = _runSpeed;
+    }
 
-        InitInputActions();
+    private void OnEnable()
+    {
+        Managers.Input.Player.SetCallbacks(this);
+        Managers.Input.Player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        Managers.Input.Player.RemoveCallbacks(this);
+        Managers.Input.Player.Disable();
     }
 
     private void Update()
     {
         _movement.Gravity();
-        _animator.SetBool(_animIDFall, _movement.IsFalling);
-
         _movement.CheckGrounded();
-        _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
 
         HandleMovement();
         UpdateAnimatorParameters();
@@ -71,18 +83,16 @@ public class Player : MonoBehaviour
         }
         else
         {
-            var look = Managers.Input.Look;
-            _thirdPersonCamera.Rotate(look.y, look.x);
+            _thirdPersonCamera.Rotate(_look.y, _look.x);
         }
     }
 
     private void HandleMovement()
     {
-        var move = Managers.Input.Move;
-        var inputDirection = new Vector3(move.x, 0f, move.y).normalized;
+        var inputDirection = new Vector3(_move.x, 0f, _move.y).normalized;
         float cameraYaw = _mainCamera.transform.eulerAngles.y;
 
-        _movement.MoveSpeed = _movement.IsLanding ? _landSpeed : Managers.Input.Sprint ? _sprintSpeed : _runSpeed;
+        _movement.MoveSpeed = _movement.IsLanding ? _landSpeed : _isPressedSprint ? _sprintSpeed : _runSpeed;
         _movement.Move(inputDirection, cameraYaw);
 
         if (LockOn.IsLockOn && IsOnlyRun())
@@ -104,23 +114,57 @@ public class Player : MonoBehaviour
         _animator.SetFloat(_animIDSpeed, _movement.SpeedBlend);
         _animator.SetFloat(_animIDPosX, isLockOnOnlyRun ? _movement.PosXBlend : 0f);
         _animator.SetFloat(_animIDPosY, isLockOnOnlyRun ? _movement.PosYBlend : 1f);
+        _animator.SetBool(_animIDGrounded, _movement.IsGrounded);
+        _animator.SetBool(_animIDJump, _movement.IsJumping);
+        _animator.SetBool(_animIDFall, _movement.IsFalling);
     }
 
     private bool IsOnlyRun()
     {
-        return !(Managers.Input.Sprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
+        return !(_isPressedSprint || _movement.IsJumping || _movement.IsFalling || _movement.IsLanding);
     }
 
-    private void InitInputActions()
+    #region Input
+    public void OnMove(InputAction.CallbackContext context)
     {
-        Managers.Input.GetAction("Jump").performed += context =>
+        _move = context.ReadValue<Vector2>();
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        if (Managers.Input.CursorLocked)
+        {
+            _look = context.ReadValue<Vector2>();
+        }
+        else
+        {
+            _look = Vector2.zero;
+        }
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            _isPressedSprint = true;
+        }
+        else if (context.canceled)
+        {
+            _isPressedSprint = false;
+        }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
             _movement.Jump();
-            _animator.SetTrigger(_animIDJump);
-        };
-        Managers.Input.GetAction("Sprint").started += context => _movement.MoveSpeed = _sprintSpeed;
-        Managers.Input.GetAction("Sprint").canceled += context => _movement.MoveSpeed = _runSpeed;
-        Managers.Input.GetAction("LockOn").performed += context =>
+        }
+    }
+
+    public void OnLockOn(InputAction.CallbackContext context)
+    {
+        if (context.performed)
         {
             if (LockOn.IsLockOn)
             {
@@ -136,8 +180,32 @@ public class Player : MonoBehaviour
                     return GeometryUtility.TestPlanesAABB(planes, bounds);
                 });
             }
-        };
-        Managers.Input.GetAction("Interact").performed += context => Interactor.Interact = true;
-        Managers.Input.GetAction("Interact").canceled += context => Interactor.Interact = false;
+        }
     }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Interactor.Interact = true;
+        }
+        else if (context.canceled)
+        {
+            Interactor.Interact = false;
+        }
+    }
+
+    public void OnCursorToggle(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (Managers.UI.IsShowedSelfishPopup)
+            {
+                return;
+            }
+
+            Managers.Input.CursorLocked = !Managers.Input.CursorLocked;
+        }
+    }
+    #endregion
 }
