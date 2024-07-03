@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     private Camera _mainCamera;
     private Animator _animator;
     private CharacterMovement _movement;
-    private ThirdPersonCamera _camera;
+    private ThirdPersonCamera _thirdPersonCamera;
     private LockOn _lockOn;
     private UI_LockOn _lockOnUI;
 
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
         _mainCamera = Camera.main;
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
-        _camera = GetComponent<ThirdPersonCamera>();
+        _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
         _lockOn = GetComponent<LockOn>();
     }
 
@@ -61,13 +61,13 @@ public class Player : MonoBehaviour
     {
         if (_lockOn.IsLockOn)
         {
-            _camera.LookRotate((_lockOn.Target.position + transform.position) * 0.5f, _lockOnRotationSpeed);
+            _thirdPersonCamera.LookRotate((_lockOn.Target.position + transform.position) * 0.5f, _lockOnRotationSpeed);
             _lockOn.TrackingTarget(_mainCamera.transform);
         }
         else
         {
             var look = Managers.Input.Look;
-            _camera.Rotate(look.y, look.x);
+            _thirdPersonCamera.Rotate(look.y, look.x);
         }
     }
 

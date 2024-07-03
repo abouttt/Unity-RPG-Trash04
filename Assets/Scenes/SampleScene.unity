@@ -725,10 +725,10 @@ MonoBehaviour:
   <ViewRadius>k__BackingField: 30
   <MinViewAngle>k__BackingField: -40
   <MaxViewAngle>k__BackingField: 40
-  <TargetMask>k__BackingField:
+  <TargetLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 128
-  <ObstacleMask>k__BackingField:
+  <ObstacleLayers>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
 --- !u!95 &1025324160

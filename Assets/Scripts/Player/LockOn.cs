@@ -25,10 +25,10 @@ public class LockOn : MonoBehaviour
     public float MaxViewAngle { get; set; }
 
     [field: SerializeField]
-    public LayerMask TargetMask { get; set; }
+    public LayerMask TargetLayers { get; set; }
 
     [field: SerializeField]
-    public LayerMask ObstacleMask { get; set; }
+    public LayerMask ObstacleLayers { get; set; }
 
     private Transform _target;
 
@@ -37,7 +37,7 @@ public class LockOn : MonoBehaviour
         float shortestAngle = Mathf.Infinity;
         Transform finalTarget = null;
 
-        var targets = Physics.OverlapSphere(start.position, ViewRadius, TargetMask);
+        var targets = Physics.OverlapSphere(start.position, ViewRadius, TargetLayers);
         foreach (var target in targets)
         {
             var directionToTarget = (target.transform.position - start.position).normalized;
@@ -53,7 +53,7 @@ public class LockOn : MonoBehaviour
                 continue;
             }
 
-            if (Physics.Linecast(start.position, target.transform.position, ObstacleMask))
+            if (Physics.Linecast(start.position, target.transform.position, ObstacleLayers))
             {
                 continue;
             }
@@ -84,7 +84,7 @@ public class LockOn : MonoBehaviour
             return;
         }
 
-        if (obstacle && Physics.Linecast(start.position, _target.position, ObstacleMask))
+        if (obstacle && Physics.Linecast(start.position, _target.position, ObstacleLayers))
         {
             Target = null;
             return;
