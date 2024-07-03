@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static LockOn LockOn { get; private set; }
     public static Interactor Interactor { get; private set; }
 
     [SerializeField]
@@ -20,8 +21,6 @@ public class Player : MonoBehaviour
     private Animator _animator;
     private CharacterMovement _movement;
     private ThirdPersonCamera _thirdPersonCamera;
-    private LockOn _lockOn;
-    private UI_LockOn _lockOnUI;
 
     // animation IDs
     private readonly int _animIDSpeed = Animator.StringToHash("Speed");
@@ -37,14 +36,14 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
         _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
-        _lockOn = GetComponent<LockOn>();
+        LockOn = GetComponent<LockOn>();
         Interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Start()
     {
         Managers.Resource.Instantiate<UI_Interaction>("UI_Interaction.prefab");
-        _lockOnUI = Managers.Resource.Instantiate<UI_LockOn>("UI_LockOn.prefab");
+        Managers.Resource.Instantiate<UI_LockOn>("UI_LockOn.prefab");
 
         _movement.MoveSpeed = _runSpeed;
 
@@ -65,10 +64,10 @@ public class Player : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_lockOn.IsLockOn)
+        if (LockOn.IsLockOn)
         {
-            _thirdPersonCamera.LookRotate((_lockOn.Target.position + transform.position) * 0.5f, _lockOnRotationSpeed);
-            _lockOn.TrackingTarget(_mainCamera.transform);
+            _thirdPersonCamera.LookRotate((LockOn.Target.position + transform.position) * 0.5f, _lockOnRotationSpeed);
+            LockOn.TrackingTarget(_mainCamera.transform);
         }
         else
         {
@@ -86,11 +85,11 @@ public class Player : MonoBehaviour
         _movement.MoveSpeed = _movement.IsLanding ? _landSpeed : Managers.Input.Sprint ? _sprintSpeed : _runSpeed;
         _movement.Move(inputDirection, cameraYaw);
 
-        if (_lockOn.IsLockOn && IsOnlyRun())
+        if (LockOn.IsLockOn && IsOnlyRun())
         {
             var rotationDirection = inputDirection == Vector3.zero
                 ? Vector3.zero
-                : (_lockOn.Target.position - transform.position).normalized;
+                : (LockOn.Target.position - transform.position).normalized;
             _movement.Rotate(rotationDirection);
         }
         else
@@ -101,7 +100,7 @@ public class Player : MonoBehaviour
 
     private void UpdateAnimatorParameters()
     {
-        bool isLockOnOnlyRun = _lockOn.IsLockOn && IsOnlyRun();
+        bool isLockOnOnlyRun = LockOn.IsLockOn && IsOnlyRun();
         _animator.SetFloat(_animIDSpeed, _movement.SpeedBlend);
         _animator.SetFloat(_animIDPosX, isLockOnOnlyRun ? _movement.PosXBlend : 0f);
         _animator.SetFloat(_animIDPosY, isLockOnOnlyRun ? _movement.PosYBlend : 1f);
@@ -123,13 +122,13 @@ public class Player : MonoBehaviour
         Managers.Input.GetAction("Sprint").canceled += context => _movement.MoveSpeed = _runSpeed;
         Managers.Input.GetAction("LockOn").performed += context =>
         {
-            if (_lockOn.IsLockOn)
+            if (LockOn.IsLockOn)
             {
-                _lockOn.Target = null;
+                LockOn.Target = null;
             }
             else
             {
-                _lockOn.FindTarget(_mainCamera.transform, target =>
+                LockOn.FindTarget(_mainCamera.transform, target =>
                 {
                     // 타겟이 절두체 안에 있는지 확인
                     var planes = GeometryUtility.CalculateFrustumPlanes(_mainCamera);
@@ -137,8 +136,6 @@ public class Player : MonoBehaviour
                     return GeometryUtility.TestPlanesAABB(planes, bounds);
                 });
             }
-
-            _lockOnUI.Target = _lockOn.Target;
         };
         Managers.Input.GetAction("Interact").performed += context => Interactor.Interact = true;
         Managers.Input.GetAction("Interact").canceled += context => Interactor.Interact = false;

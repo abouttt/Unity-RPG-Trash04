@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class LockOn : MonoBehaviour
 {
+    public event Action<Transform> TargetChanged;
+
     public Transform Target
     {
         get => _target;
@@ -10,6 +12,7 @@ public class LockOn : MonoBehaviour
         {
             _target = value;
             IsLockOn = _target != null;
+            TargetChanged?.Invoke(_target);
         }
     }
 

@@ -2,20 +2,11 @@ using UnityEngine;
 
 public class UI_FollowWorldObject : MonoBehaviour
 {
-    public Transform Target
-    {
-        get => _target;
-        set
-        {
-            _target = value;
-            gameObject.SetActive(_target != null);
-        }
-    }
+    public Transform Target { get; set; }
 
     [field: SerializeField]
     public Vector3 Offset { get; set; }
 
-    private Transform _target;
     private Camera _mainCamera;
     private RectTransform _rt;
 
@@ -27,9 +18,9 @@ public class UI_FollowWorldObject : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_target != null)
+        if (Target != null)
         {
-            _rt.position = _mainCamera.WorldToScreenPoint(_target.position + Offset);
+            _rt.position = _mainCamera.WorldToScreenPoint(Target.position + Offset);
         }
     }
 
