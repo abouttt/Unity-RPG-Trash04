@@ -245,7 +245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <IsDetected>k__BackingField: 0
   <IsInteracted>k__BackingField: 0
-  <Message>k__BackingField: "\uB300\uD654"
+  <InteractionName>k__BackingField: "\uCEA1\uC290"
+  <InteractionMessage>k__BackingField: "\uB300\uD654"
+  <UIOffset>k__BackingField: {x: 0, y: 1.3, z: 0}
   <LoadingTime>k__BackingField: 0.5
   <CanInteract>k__BackingField: 1
 --- !u!1 &54013984

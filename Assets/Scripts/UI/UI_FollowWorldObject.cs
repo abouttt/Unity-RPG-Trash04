@@ -27,11 +27,7 @@ public class UI_FollowWorldObject : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_target == null)
-        {
-            gameObject.SetActive(false);
-        }
-        else
+        if (_target != null)
         {
             _rt.position = _mainCamera.WorldToScreenPoint(_target.position + Offset);
         }

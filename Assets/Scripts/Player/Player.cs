@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Interactor Interactor { get; private set; }
+
     [SerializeField]
     private float _runSpeed;
 
@@ -19,7 +21,6 @@ public class Player : MonoBehaviour
     private CharacterMovement _movement;
     private ThirdPersonCamera _thirdPersonCamera;
     private LockOn _lockOn;
-    private Interactor _interactor;
     private UI_LockOn _lockOnUI;
 
     // animation IDs
@@ -37,13 +38,16 @@ public class Player : MonoBehaviour
         _movement = GetComponent<CharacterMovement>();
         _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
         _lockOn = GetComponent<LockOn>();
-        _interactor = GetComponentInChildren<Interactor>();
+        Interactor = GetComponentInChildren<Interactor>();
     }
 
     private void Start()
     {
+        Managers.Resource.Instantiate<UI_Interaction>("UI_Interaction.prefab");
         _lockOnUI = Managers.Resource.Instantiate<UI_LockOn>("UI_LockOn.prefab");
+
         _movement.MoveSpeed = _runSpeed;
+
         InitInputActions();
     }
 
@@ -136,7 +140,7 @@ public class Player : MonoBehaviour
 
             _lockOnUI.Target = _lockOn.Target;
         };
-        Managers.Input.GetAction("Interact").performed += context => _interactor.Interact = true;
-        Managers.Input.GetAction("Interact").canceled += context => _interactor.Interact = false;
+        Managers.Input.GetAction("Interact").performed += context => Interactor.Interact = true;
+        Managers.Input.GetAction("Interact").canceled += context => Interactor.Interact = false;
     }
 }

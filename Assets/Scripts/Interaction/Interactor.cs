@@ -29,7 +29,7 @@ public class Interactor : MonoBehaviour
     }
 
     public bool Interact { get; set; }
-    public float InteractLoadingTime { get; private set; }
+    public float ProgressedLoadingTime { get; private set; }
 
     [field: SerializeField]
     public LayerMask TargetLayers { get; set; }
@@ -69,17 +69,17 @@ public class Interactor : MonoBehaviour
         {
             if (_canInteract)
             {
-                InteractLoadingTime += Time.deltaTime;
-                if (InteractLoadingTime >= _target.LoadingTime)
+                ProgressedLoadingTime += Time.deltaTime;
+                if (ProgressedLoadingTime >= _target.LoadingTime)
                 {
-                    InteractLoadingTime = 0;
+                    ProgressedLoadingTime = 0;
                     _target.Interact();
                 }
             }
         }
         else
         {
-            InteractLoadingTime = 0f;
+            ProgressedLoadingTime = 0f;
             _canInteract = true;
         }
     }

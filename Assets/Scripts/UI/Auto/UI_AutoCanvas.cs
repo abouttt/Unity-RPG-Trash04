@@ -6,10 +6,4 @@ public class UI_AutoCanvas : UI_Base
     {
         Managers.UI.Register<UI_AutoCanvas>(this);
     }
-
-    public void AddAutoUI(UI_Auto auto)
-    {
-        auto.transform.SetParent(transform);
-        auto.gameObject.SetActive(false);
-    }
 }
