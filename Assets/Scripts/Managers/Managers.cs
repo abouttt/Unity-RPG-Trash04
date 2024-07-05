@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Managers : Singleton<Managers>
 {
+    public static CooldownManager Cooldown => Instance._cooldown;
     public static GameManager Game => Instance._game;
     public static InputManager Input => Instance._input;
     public static PoolManager Pool => Instance._pool;
@@ -11,6 +12,7 @@ public class Managers : Singleton<Managers>
     public static SoundManager Sound => Instance._sound;
     public static UIManager UI => Instance._ui;
 
+    private readonly CooldownManager _cooldown = new();
     private readonly GameManager _game = new();
     private readonly InputManager _input = new();
     private readonly PoolManager _pool = new();
@@ -30,8 +32,14 @@ public class Managers : Singleton<Managers>
         _ui.Init();
     }
 
+    private void LateUpdate()
+    {
+        Cooldown.UpdateCooldowns();
+    }
+
     public static void Clear()
     {
+        Cooldown.Clear();
         Pool.Clear();
         Resource.Clear();
         Sound.Clear();
