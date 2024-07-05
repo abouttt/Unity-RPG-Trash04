@@ -1,0 +1,30 @@
+using UnityEngine;
+using UnityEditor;
+
+[CustomEditor(typeof(ItemData), true)]
+public class ItemDataEditor : Editor
+{
+    private SerializedProperty _itemIdProp;
+
+    private void OnEnable()
+    {
+        _itemIdProp = serializedObject.FindProperty($"<{nameof(ItemData.ItemId)}>k__BackingField");
+    }
+
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+
+        DrawDefaultInspector();
+
+        // 아이템 아이디를 강제로 대문자로 변환
+        string originalItemId = _itemIdProp.stringValue;
+        string newItemId = originalItemId.ToUpper();
+        if (!originalItemId.Equals(newItemId))
+        {
+            _itemIdProp.stringValue = newItemId;
+        }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+}

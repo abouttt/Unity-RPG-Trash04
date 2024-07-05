@@ -1,4 +1,30 @@
 
+public enum EquipmentType
+{
+    Helmet,
+    Chest,
+    Pants,
+    Boots,
+    Weapon,
+    Shield,
+}
+
+public enum ItemType
+{
+    Equipment,
+    Consumable,
+    Miscellaneous,
+}
+
+public enum ItemRarity
+{
+    Common,
+    Uncommon,
+    Rare,
+    Epic,
+    Legendary,
+}
+
 public enum UIType
 {
     Subitem,
