@@ -26,6 +26,8 @@ public abstract class ItemData : ScriptableObject
         ItemId = $"{itemType}_".ToUpper();
     }
 
+    public abstract Item CreateItem();
+
     public bool Equals(ItemData other)
     {
         if (other == null)

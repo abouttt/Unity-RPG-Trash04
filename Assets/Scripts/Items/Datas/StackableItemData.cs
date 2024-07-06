@@ -9,6 +9,7 @@ public abstract class StackableItemData : ItemData
 
     public StackableItemData(ItemType itemType)
         : base(itemType)
-    {
-    }
+    { }
+
+    public abstract Item CreateItem(int count);
 }

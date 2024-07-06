@@ -16,6 +16,10 @@ public class EquipmentItemData : ItemData
 
     public EquipmentItemData()
         : base(ItemType.Equipment)
+    { }
+
+    public override Item CreateItem()
     {
+        return new EquipmentItem(this);
     }
 }

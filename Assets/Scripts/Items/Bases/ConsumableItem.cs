@@ -19,6 +19,11 @@ public abstract class ConsumableItem : StackableItem, IUsableItem
             return false;
         }
 
+        if (ConsumableData.Cooldown.RemainingTime > 0f)
+        {
+            return false;
+        }
+
         return true;
     }
 }

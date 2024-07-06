@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ICooldownable
 {
-    public Cooldown Cooldown { get; }
+    Cooldown Cooldown { get; }
 }

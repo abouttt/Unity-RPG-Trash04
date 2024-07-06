@@ -61,8 +61,11 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
 
     private void OnDisable()
     {
-        Managers.Input.Player.RemoveCallbacks(this);
-        Managers.Input.Player.Disable();
+        if (Managers.Instance != null)
+        {
+            Managers.Input.Player.RemoveCallbacks(this);
+            Managers.Input.Player.Disable();
+        }
     }
 
     private void Update()

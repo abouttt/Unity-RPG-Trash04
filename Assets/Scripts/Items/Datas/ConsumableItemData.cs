@@ -15,6 +15,5 @@ public abstract class ConsumableItemData : StackableItemData, ICooldownable
 
     public ConsumableItemData()
         : base(ItemType.Consumable)
-    {
-    }
+    { }
 }
