@@ -1,32 +1,43 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class Inventory
 {
+    [field: SerializeField]
     public int Capacity { get; private set; }
+
+    [field: SerializeField, ReadOnly]
     public int Count { get; private set; }
+
     public IReadOnlyList<Item> Items => _items;
 
-    public List<Item> _items;
-    public Dictionary<Item, int> _indexes = new();
+    private List<Item> _items;
+    private readonly Dictionary<Item, int> _indexes = new();
 
-    public Inventory(int capacity)
+    public void Init()
     {
-        Capacity = capacity;
-        _items = Enumerable.Repeat<Item>(null, capacity).ToList();
-    }
-
-    public void SetItem(ItemData itemData, int index, int count)
-    {
-        if (itemData == null)
+        if (_items != null)
         {
             return;
         }
 
+        var nullItems = Enumerable.Repeat<Item>(null, Capacity);
+        _items = new(nullItems);
+    }
+
+    public bool SetItem(ItemData itemData, int index, int count)
+    {
+        if (itemData == null)
+        {
+            return false;
+        }
+
         if (count <= 0)
         {
-            return;
+            return false;
         }
 
         if (_items[index] != null)
@@ -34,22 +45,26 @@ public class Inventory
             RemoveItem(index);
         }
 
-        var newItem = itemData is StackableItemData stackableData ? stackableData.CreateItem(count) : itemData.CreateItem();
+        var newItem = itemData is StackableItemData stackableItemData ? stackableItemData.CreateItem(count) : itemData.CreateItem();
         _items[index] = newItem;
         _indexes.Add(newItem, index);
         Count++;
+
+        return true;
     }
 
-    public void RemoveItem(int index)
+    public bool RemoveItem(int index)
     {
         if (_items[index] == null)
         {
-            return;
+            return false;
         }
 
         _indexes.Remove(_items[index]);
         _items[index] = null;
         Count--;
+
+        return true;
     }
 
     public T GetItem<T>(int index) where T : Item
@@ -65,6 +80,24 @@ public class Inventory
         }
 
         return -1;
+    }
+
+    public int FindSameItemIndex(ItemData itemData, int startIndex = 0)
+    {
+        if (itemData == null)
+        {
+            return -1;
+        }
+
+        return _items.FindIndex(startIndex, item =>
+        {
+            if (item == null)
+            {
+                return false;
+            }
+
+            return item.Data.Equals(itemData);
+        });
     }
 
     public bool IsEmptyIndex(int index)
@@ -92,10 +125,21 @@ public class Inventory
         (_items[index1], _items[index2]) = (_items[index2], _items[index1]);
     }
 
+    public void AddCapacity(int capacity)
+    {
+        if (capacity <= 0)
+        {
+            return;
+        }
+
+        var nullItems = Enumerable.Repeat<Item>(null, capacity);
+        _items.AddRange(nullItems);
+    }
+
     public void Clear()
     {
+        Count = 0;
         _items.Clear();
         _indexes.Clear();
-        Count = 0;
     }
 }
