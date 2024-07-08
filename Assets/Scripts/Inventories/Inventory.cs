@@ -35,6 +35,11 @@ public class Inventory
             return false;
         }
 
+        if (!IsIndexInRange(index))
+        {
+            return false;
+        }
+
         if (count <= 0)
         {
             return false;
@@ -55,6 +60,11 @@ public class Inventory
 
     public bool RemoveItem(int index)
     {
+        if (!IsIndexInRange(index))
+        {
+            return false;
+        }
+
         if (_items[index] == null)
         {
             return false;
@@ -69,6 +79,11 @@ public class Inventory
 
     public T GetItem<T>(int index) where T : Item
     {
+        if (!IsIndexInRange(index))
+        {
+            return null;
+        }
+
         return _items[index] as T;
     }
 
@@ -89,6 +104,11 @@ public class Inventory
             return -1;
         }
 
+        if (!IsIndexInRange(startIndex))
+        {
+            return -1;
+        }
+
         return _items.FindIndex(startIndex, item =>
         {
             if (item == null)
@@ -102,16 +122,31 @@ public class Inventory
 
     public bool IsEmptyIndex(int index)
     {
+        if (!IsIndexInRange(index))
+        {
+            return false;
+        }
+
         return _items[index] == null;
     }
 
     public int FindEmptyIndex(int startIndex = 0)
     {
+        if (!IsIndexInRange(startIndex))
+        {
+            return -1;
+        }
+
         return _items.FindIndex(startIndex, item => item == null);
     }
 
     public void SwapItem(int index1, int index2)
     {
+        if (!IsIndexInRange(index1) || !IsIndexInRange(index2))
+        {
+            return;
+        }
+
         if (_items[index1] != null)
         {
             _indexes[_items[index1]] = index2;
@@ -141,5 +176,10 @@ public class Inventory
         Count = 0;
         _items.Clear();
         _indexes.Clear();
+    }
+
+    private bool IsIndexInRange(int index)
+    {
+        return index >= 0 && index < _indexes.Count;
     }
 }
