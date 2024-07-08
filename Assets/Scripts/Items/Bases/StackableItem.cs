@@ -1,18 +1,29 @@
+using System;
 using UnityEngine;
 
 public abstract class StackableItem : Item, IStackableItem
 {
+    public event Action StackChanged;
+
     public StackableItemData StackableData { get; private set; }
 
     public int Count
     {
         get => _count;
-        set => _count = Mathf.Clamp(_count, 0, MaxCount);
+        set
+        {
+            int prevCount = _count;
+            _count = Mathf.Clamp(value, 0, MaxCount);
+            if (prevCount != _count)
+            {
+                StackChanged?.Invoke();
+            }
+        }
     }
 
     public int MaxCount => StackableData.MaxCount;
-    public bool IsMax => Count >= MaxCount;
-    public bool IsEmpty => Count <= 0;
+    public bool IsMax => _count >= MaxCount;
+    public bool IsEmpty => _count <= 0;
 
     private int _count;
 
@@ -25,8 +36,8 @@ public abstract class StackableItem : Item, IStackableItem
 
     public int AddCountAndGetExcess(int count)
     {
-        int nextCount = Count + count;
-        Count = count;
+        int nextCount = _count + count;
+        Count += count;
         return nextCount > MaxCount ? nextCount - MaxCount : 0;
     }
 }
