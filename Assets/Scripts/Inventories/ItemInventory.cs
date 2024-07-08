@@ -24,13 +24,11 @@ public class ItemInventory : MonoBehaviour
     {
         if (itemData == null)
         {
-            Debug.LogWarning("[ItemInventory/AddItem] ItemData is null.");
             return -1;
         }
 
         if (count <= 0)
         {
-            Debug.LogWarning($"[ItemInventory/AddItem] {itemData.ItemName} count <= 0");
             return -1;
         }
 
@@ -94,10 +92,10 @@ public class ItemInventory : MonoBehaviour
         }
 
         var itemType = item.Data.ItemType;
-        int index = _inventories[itemType].GetItemIndex(item);
-        if (index != -1)
+        var inventory = _inventories[itemType];
+        int index = inventory.GetItemIndex(item);
+        if (inventory.RemoveItem(index))
         {
-            _inventories[itemType].RemoveItem(index);
             InventoryChanged?.Invoke(itemType, index);
         }
     }
@@ -116,5 +114,101 @@ public class ItemInventory : MonoBehaviour
         {
             InventoryChanged?.Invoke(itemData.ItemType, index);
         }
+    }
+
+    public void MoveItem(ItemType itemType, int fromIndex, int toIndex)
+    {
+        if (fromIndex == toIndex)
+        {
+            return;
+        }
+
+        if (!TryMergeItem(itemType, fromIndex, toIndex))
+        {
+            SwapItem(itemType, fromIndex, toIndex);
+        }
+    }
+
+    public void SplitItem(ItemType itemType, int fromIndex, int toIndex, int count)
+    {
+        if (fromIndex == toIndex)
+        {
+            return;
+        }
+
+        if (count <= 0)
+        {
+            return;
+        }
+
+        var inventory = _inventories[itemType];
+        if (inventory.IsEmptyIndex(fromIndex) || !inventory.IsEmptyIndex(toIndex))
+        {
+            return;
+        }
+
+        var fromItem = inventory.GetItem<StackableItem>(fromIndex);
+        if (fromItem == null)
+        {
+            return;
+        }
+
+        int nextCount = fromItem.Count - count;
+        if (nextCount == 0)
+        {
+            SwapItem(itemType, fromIndex, toIndex);
+        }
+        else if (nextCount > 0)
+        {
+            fromItem.Count = nextCount;
+            SetItem(fromItem.StackableData, toIndex, count);
+        }
+    }
+
+    public T GetItem<T>(ItemType itemType, int index) where T : Item
+    {
+        return _inventories[itemType].GetItem<T>(index);
+    }
+
+    public int GetItemIndex(Item item)
+    {
+        return _inventories[item.Data.ItemType].GetItemIndex(item);
+    }
+
+    private void SwapItem(ItemType itemType, int fromIndex, int toIndex)
+    {
+        _inventories[itemType].SwapItem(fromIndex, toIndex);
+        InventoryChanged?.Invoke(itemType, fromIndex);
+        InventoryChanged?.Invoke(itemType, toIndex);
+    }
+
+    private bool TryMergeItem(ItemType itemType, int fromIndex, int toIndex)
+    {
+        var fromItem = _inventories[itemType].GetItem<StackableItem>(fromIndex);
+        var toItem = _inventories[itemType].GetItem<StackableItem>(toIndex);
+
+        if (fromItem == null || toItem == null)
+        {
+            return false;
+        }
+
+        if (!fromItem.Data.Equals(toItem.Data))
+        {
+            return false;
+        }
+
+        if (toItem.IsMax)
+        {
+            return false;
+        }
+
+        int excessCount = toItem.AddCountAndGetExcess(fromItem.Count);
+        fromItem.Count = excessCount;
+        if (fromItem.IsEmpty)
+        {
+            RemoveItem(itemType, fromIndex);
+        }
+
+        return true;
     }
 }
