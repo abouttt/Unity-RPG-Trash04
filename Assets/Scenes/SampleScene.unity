@@ -901,6 +901,7 @@ GameObject:
   - component: {fileID: 1025324156}
   - component: {fileID: 1025324157}
   - component: {fileID: 1025324158}
+  - component: {fileID: 1025324161}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1055,6 +1056,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1025324161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025324151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74790c41048c92142bed2c7b6762c20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventories:
+    _serializedList:
+    - Key: 0
+      Value:
+        <Capacity>k__BackingField: 30
+        <Count>k__BackingField: 0
+    - Key: 1
+      Value:
+        <Capacity>k__BackingField: 30
+        <Count>k__BackingField: 0
+    - Key: 2
+      Value:
+        <Capacity>k__BackingField: 30
+        <Count>k__BackingField: 0
 --- !u!1 &1043920662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,6 +1334,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b3ce62e0170f04096995dbb7c81849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: 927a70c6bc5ba674481e43b572d46d1a, type: 2}
+  count: 50
 --- !u!4 &1802935560
 Transform:
   m_ObjectHideFlags: 0

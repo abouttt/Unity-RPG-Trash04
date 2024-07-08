@@ -5,6 +5,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
 {
     public static LockOn LockOn { get; private set; }
     public static Interactor Interactor { get; private set; }
+    public static ItemInventory ItemInventory { get; private set; }
 
     [SerializeField]
     private float _runSpeed;
@@ -43,6 +44,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
         _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
         LockOn = GetComponent<LockOn>();
         Interactor = GetComponentInChildren<Interactor>();
+        ItemInventory = GetComponent<ItemInventory>();
     }
 
     private void Start()
