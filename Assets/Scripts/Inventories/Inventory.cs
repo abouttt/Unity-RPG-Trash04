@@ -180,6 +180,6 @@ public class Inventory
 
     private bool IsIndexInRange(int index)
     {
-        return index >= 0 && index < _indexes.Count;
+        return index >= 0 && index < _items.Count;
     }
 }
