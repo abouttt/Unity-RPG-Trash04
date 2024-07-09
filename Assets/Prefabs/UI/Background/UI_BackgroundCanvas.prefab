@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <UIType>k__BackingField: 1
+  DestroyItemText: "\uC544\uC774\uD15C\uC744 \uD30C\uAD34\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
 --- !u!1 &4163913508920738499
 GameObject:
   m_ObjectHideFlags: 0

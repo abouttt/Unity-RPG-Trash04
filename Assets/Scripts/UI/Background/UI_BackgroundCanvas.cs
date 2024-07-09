@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 
 public class UI_BackgroundCanvas : UI_Base, IPointerDownHandler, IDropHandler
 {
+    [SerializeField, Space(10), TextArea]
+    private string DestroyItemText;
+
     protected override void Init()
     {
         Managers.UI.Register<UI_BackgroundCanvas>(this);
@@ -28,6 +31,12 @@ public class UI_BackgroundCanvas : UI_Base, IPointerDownHandler, IDropHandler
 
     private void OnDropItemSlot(UI_ItemSlot itemSlot)
     {
-
+        var item = itemSlot.ObjectRef as Item;
+        string text = $"[{item.Data.ItemName}] {DestroyItemText}";
+        Managers.UI.Show<UI_ConfirmationPopup>().SetEvent(() =>
+        {
+            Player.ItemInventory.RemoveItem(itemSlot.ItemType, itemSlot.Index);
+        },
+        text);
     }
 }
