@@ -9,7 +9,7 @@ public abstract class ItemData : ScriptableObject
     public string ItemName { get; private set; }
 
     [field: SerializeField, SpritePreview(100)]
-    public Sprite ItemIcon { get; private set; }
+    public Sprite ItemImage { get; private set; }
 
     [field: SerializeField, ReadOnly]
     public ItemType ItemType { get; private set; }

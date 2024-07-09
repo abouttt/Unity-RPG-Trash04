@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemId>k__BackingField: MISCELLANEOUS_FOO
   <ItemName>k__BackingField: foo
-  <ItemIcon>k__BackingField: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3, type: 3}
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3, type: 3}
   <ItemType>k__BackingField: 2
   <ItemRarity>k__BackingField: 0
   <Description>k__BackingField: foo

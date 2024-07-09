@@ -27,6 +27,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
     private Animator _animator;
     private CharacterMovement _movement;
     private ThirdPersonCamera _thirdPersonCamera;
+    private readonly UIController _uiController = new();
 
     // animation IDs
     private readonly int _animIDSpeed = Animator.StringToHash("Speed");
@@ -59,6 +60,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
     {
         Managers.Input.Player.SetCallbacks(this);
         Managers.Input.Player.Enable();
+        _uiController.Enable();
     }
 
     private void OnDisable()
@@ -67,6 +69,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
         {
             Managers.Input.Player.RemoveCallbacks(this);
             Managers.Input.Player.Disable();
+            _uiController.Disable();
         }
     }
 
@@ -197,19 +200,6 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
         else if (context.canceled)
         {
             Interactor.Interact = false;
-        }
-    }
-
-    public void OnCursorToggle(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            if (Managers.UI.IsShowedSelfishPopup)
-            {
-                return;
-            }
-
-            Managers.Input.CursorLocked = !Managers.Input.CursorLocked;
         }
     }
     #endregion

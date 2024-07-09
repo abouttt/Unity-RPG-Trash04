@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class InputManager
 {
     public GameControls.PlayerActions Player => _gameControls.Player;
+    public GameControls.UIActions UI => _gameControls.UI;
 
     public bool CursorLocked
     {

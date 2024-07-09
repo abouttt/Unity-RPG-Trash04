@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "CursorToggle",
-                    "type": "Button",
-                    "id": "80176954-fa22-4df9-84ab-3f8db7650913",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -179,10 +170,67 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "759ec669-6183-4137-80c2-0de29651bc91",
+            "actions": [
+                {
+                    "name": "ItemInventory",
+                    "type": "Button",
+                    "id": "e0b1caa1-6d73-4eb1-b945-34ea4355092a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CursorToggle",
+                    "type": "Button",
+                    "id": "78687c0f-7b77-475d-92fa-4601b6524e1f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Cancel",
+                    "type": "Button",
+                    "id": "7b401828-2e68-46d6-8f0e-a7cf4396a9ae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "09641d1a-59f1-462e-90fe-21b5ed29435d",
+                    "path": "<Keyboard>/i",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "ItemInventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "126bbc37-879f-4751-b7a0-c82598b03484",
+                    "id": "33baaed0-b1ea-4786-8b56-5f37bbb75f0f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a9e13635-f04a-40d8-90e1-4fb77a7bbe54",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",

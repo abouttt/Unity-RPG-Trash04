@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemData: {fileID: 11400000, guid: 927a70c6bc5ba674481e43b572d46d1a, type: 2}
-  count: 50
+  count: 10
 --- !u!4 &1802935560
 Transform:
   m_ObjectHideFlags: 0
