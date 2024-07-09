@@ -24,10 +24,7 @@ public class FieldItem : Interactable
     {
         base.Interact();
 
-        foreach (var item in Items)
-        {
-            Player.ItemInventory.AddItem(item.Key, item.Value);
-        }
+        Managers.UI.Show<UI_LootPopup>().SetFieldItem(this);
     }
 
     public void AddItem(ItemData itemData, int count)

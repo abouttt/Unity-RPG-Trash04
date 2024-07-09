@@ -94,9 +94,11 @@ public class PoolManager
                 return null;
             }
 
+            var go = Object.Instantiate(Prefab);
+            go.name = Prefab.name;
             Size++;
 
-            return Object.Instantiate(Prefab);
+            return go;
         }
 
         private void PushToDeactiveContainer(GameObject go)

@@ -1298,6 +1298,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
+      propertyPath: <LoadingTime>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -1432,8 +1436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b3ce62e0170f04096995dbb7c81849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 927a70c6bc5ba674481e43b572d46d1a, type: 2}
-  count: 99
 --- !u!4 &1802935560
 Transform:
   m_ObjectHideFlags: 0

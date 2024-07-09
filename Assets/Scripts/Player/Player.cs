@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, GameControls.IPlayerActions
 {
+    public static GameObject GameObject { get; private set; }
     public static LockOn LockOn { get; private set; }
     public static Interactor Interactor { get; private set; }
     public static ItemInventory ItemInventory { get; private set; }
@@ -47,6 +48,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
         _animator = GetComponent<Animator>();
         _movement = GetComponent<CharacterMovement>();
         _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
+        GameObject = gameObject;
         LockOn = GetComponent<LockOn>();
         Interactor = GetComponentInChildren<Interactor>();
         ItemInventory = GetComponent<ItemInventory>();
