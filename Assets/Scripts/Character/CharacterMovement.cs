@@ -3,10 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class CharacterMovement : MonoBehaviour
 {
-    public float SpeedBlend { get; private set; }
-    public float PosXBlend { get; private set; }
-    public float PosYBlend { get; private set; }
-
     [field: SerializeField, ReadOnly]
     public bool IsGrounded { get; private set; } = true;
 
@@ -19,18 +15,18 @@ public class CharacterMovement : MonoBehaviour
     [field: SerializeField, ReadOnly]
     public bool IsLanding { get; private set; }
 
-    [field: Header("[Move]")]
+    [field: Header("Move")]
     [field: SerializeField]
     public float MoveSpeed { get; set; }
 
     [field: SerializeField]
     public float SpeedChangeRate { get; set; }
 
-    [field: Header("[Rotation]")]
+    [field: Header("Rotation")]
     [field: SerializeField, Range(0f, 0.3f)]
     public float RotationSpeed { get; set; }
 
-    [Header("[Jump]")]
+    [Header("Jump")]
     [SerializeField]
     private float _jumpHeight;
 
@@ -46,7 +42,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField]
     private float _landTimeout;
 
-    [Header("[Grounded]")]
+    [Header("Grounded")]
     [SerializeField]
     private float _groundedOffset = -0.14f;
 
@@ -158,16 +154,6 @@ public class CharacterMovement : MonoBehaviour
         else
         {
             _speed = targetSpeed;
-        }
-
-        SpeedBlend = Mathf.Lerp(SpeedBlend, targetSpeed, currentSpeedChangeRate);
-        PosXBlend = Mathf.Lerp(PosXBlend, direction.x, currentSpeedChangeRate);
-        PosYBlend = Mathf.Lerp(PosYBlend, direction.z, currentSpeedChangeRate);
-        if (SpeedBlend < 0.01f)
-        {
-            SpeedBlend = 0f;
-            PosXBlend = 0f;
-            PosYBlend = 0f;
         }
 
         if (direction != Vector3.zero)

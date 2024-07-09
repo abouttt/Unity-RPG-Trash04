@@ -34,10 +34,10 @@ public class LoadingScene : BaseScene
 
     private IEnumerator LoadSceneAsync()
     {
+        float timer = 0f;
         var op = SceneManager.LoadSceneAsync(Managers.Scene.NextScene.ToString());
         op.allowSceneActivation = false;
 
-        float timer = 0f;
         while (!op.isDone)
         {
             yield return null;

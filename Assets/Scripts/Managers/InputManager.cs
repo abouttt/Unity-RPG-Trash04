@@ -50,8 +50,8 @@ public class InputManager
 
     public string GetBindingPath(string actionNameOrId, int bindingIndex = 0)
     {
-        var key = GetAction(actionNameOrId).bindings[bindingIndex].path;
-        var path = key.GetStringAfterLastSlash();
+        string key = GetAction(actionNameOrId).bindings[bindingIndex].path;
+        string path = key.GetStringAfterLastSlash();
         return path.ToUpper();
     }
 }

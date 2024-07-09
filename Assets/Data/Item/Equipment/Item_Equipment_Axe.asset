@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e560e753d3bf2fe46a051ead29fbea74, type: 3}
+  m_Name: Item_Equipment_Axe
+  m_EditorClassIdentifier: 
+  <ItemId>k__BackingField: EQUIPMENT_
+  <ItemName>k__BackingField: 
+  <ItemImage>k__BackingField: {fileID: 0}
+  <ItemType>k__BackingField: 0
+  <ItemRarity>k__BackingField: 0
+  <Description>k__BackingField: 
+  <LimitLevel>k__BackingField: 1
+  <EquipmentType>k__BackingField: 0
+  <Prefab>k__BackingField: {fileID: 0}

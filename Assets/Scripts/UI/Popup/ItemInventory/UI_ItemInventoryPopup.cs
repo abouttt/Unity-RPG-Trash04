@@ -63,7 +63,7 @@ public class UI_ItemInventoryPopup : UI_Popup
 
         Showed += () =>
         {
-            Body.SetParent(transform);
+            PopupRT.SetParent(transform);
             Get<ScrollRect>((int)ScrollRects.ItemSlotScrollView).verticalScrollbar.value = 1f;
         };
 

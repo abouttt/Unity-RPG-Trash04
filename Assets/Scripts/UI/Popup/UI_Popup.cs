@@ -21,7 +21,7 @@ public abstract class UI_Popup : UI_Base, IPointerDownHandler
     public bool IgnoreSelfish { get; private set; }
 
     [field: SerializeField]
-    public RectTransform Body { get; private set; }
+    public RectTransform PopupRT { get; private set; }
 
     [field: SerializeField]
     public Vector3 DefaultPosition { get; private set; }
@@ -30,9 +30,9 @@ public abstract class UI_Popup : UI_Base, IPointerDownHandler
 
     protected override void Init()
     {
-        if (Body == null)
+        if (PopupRT == null)
         {
-            Body = transform.GetChild(0).GetComponent<RectTransform>();
+            PopupRT = transform.GetChild(0).GetComponent<RectTransform>();
         }
 
         Canvas = GetComponent<Canvas>();

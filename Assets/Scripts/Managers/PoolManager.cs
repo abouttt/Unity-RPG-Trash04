@@ -133,8 +133,7 @@ public class PoolManager
             return;
         }
 
-        var name = prefab.name;
-
+        string name = prefab.name;
         if (_pools.ContainsKey(name))
         {
             Debug.Log($"[PoolManager/CreatePool] {name} pool already exist.");
@@ -154,8 +153,7 @@ public class PoolManager
             return false;
         }
 
-        var name = go.name;
-
+        string name = go.name;
         if (!_pools.ContainsKey(name))
         {
             Debug.Log($"[PoolManager/Push] {name} pool no exist.");
@@ -169,8 +167,7 @@ public class PoolManager
 
     public GameObject Pop(GameObject prefab, Transform parent = null)
     {
-        var name = prefab.name;
-
+        string name = prefab.name;
         if (!_pools.TryGetValue(name, out var pool))
         {
             if (AutoCreate)

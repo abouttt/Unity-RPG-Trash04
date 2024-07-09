@@ -47,7 +47,7 @@ public class UI_ItemSplitPopup : UI_Popup
         BindButton(typeof(Buttons));
         Bind<TMP_InputField>(typeof(InputFields));
 
-        _dotween = Body.GetComponent<DOTweenAnimation>();
+        _dotween = PopupRT.GetComponent<DOTweenAnimation>();
     }
 
     private void Start()
@@ -56,13 +56,14 @@ public class UI_ItemSplitPopup : UI_Popup
 
         Showed += () =>
         {
-            Body.localScale = new Vector3(0f, 1f, 1f);
+            PopupRT.localScale = new Vector3(0f, 1f, 1f);
             _dotween.DORestart();
         };
 
-        Get<TMP_InputField>((int)InputFields.InputField).onValueChanged.AddListener(value => OnValueChanged(value));
-        Get<TMP_InputField>((int)InputFields.InputField).onEndEdit.AddListener(value => OnEndEdit(value));
-        Get<TMP_InputField>((int)InputFields.InputField).onSubmit.AddListener(value => GetButton((int)Buttons.YesButton).onClick.Invoke());
+        var inputField = Get<TMP_InputField>((int)InputFields.InputField);
+        inputField.onValueChanged.AddListener(value => OnValueChanged(value));
+        inputField.onEndEdit.AddListener(value => OnEndEdit(value));
+        inputField.onSubmit.AddListener(value => GetButton((int)Buttons.YesButton).onClick.Invoke());
 
         GetButton((int)Buttons.UpButton).onClick.AddListener(() => OnClickUpOrDownButton(1));
         GetButton((int)Buttons.DownButton).onClick.AddListener(() => OnClickUpOrDownButton(-1));

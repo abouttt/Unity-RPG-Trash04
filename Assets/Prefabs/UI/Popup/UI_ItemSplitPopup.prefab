@@ -1259,7 +1259,7 @@ MonoBehaviour:
   <IsHelper>k__BackingField: 1
   <IsSelfish>k__BackingField: 0
   <IgnoreSelfish>k__BackingField: 1
-  <Body>k__BackingField: {fileID: 1429194328118485488}
+  <PopupRT>k__BackingField: {fileID: 1429194328118485488}
   <DefaultPosition>k__BackingField: {x: 0, y: 0, z: 0}
 --- !u!1 &4249237253012817494
 GameObject:

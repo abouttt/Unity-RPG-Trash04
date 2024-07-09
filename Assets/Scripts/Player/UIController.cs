@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class UIController : GameControls.IUIActions
+public class UIController : MonoBehaviour, GameControls.IUIActions
 {
-    public void Enable()
+    public void OnEnable()
     {
         Managers.Input.UI.SetCallbacks(this);
         Managers.Input.UI.Enable();
     }
 
-    public void Disable()
+    public void OnDisable()
     {
         if (Managers.Instance != null)
         {

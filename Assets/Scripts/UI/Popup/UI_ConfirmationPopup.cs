@@ -26,7 +26,7 @@ public class UI_ConfirmationPopup : UI_Popup
         BindText(typeof(Texts));
         BindButton(typeof(Buttons));
 
-        _dotween = Body.GetComponent<DOTweenAnimation>();
+        _dotween = PopupRT.GetComponent<DOTweenAnimation>();
     }
 
     private void Start()
@@ -35,7 +35,7 @@ public class UI_ConfirmationPopup : UI_Popup
 
         Showed += () =>
         {
-            Body.localScale = new Vector3(0f, 1f, 1f);
+            PopupRT.localScale = new Vector3(0f, 1f, 1f);
             _dotween.DORestart();
         };
 

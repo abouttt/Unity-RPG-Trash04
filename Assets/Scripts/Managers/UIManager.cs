@@ -277,7 +277,7 @@ public class UIManager
 
     private void InitPopup(UI_Popup popup)
     {
-        popup.Body.anchoredPosition = popup.DefaultPosition;
+        popup.PopupRT.anchoredPosition = popup.DefaultPosition;
 
         popup.Focused += () =>
         {

@@ -39,27 +39,29 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
         var item = Player.ItemInventory.GetItem<Item>(ItemType, Index);
         if (item != null)
         {
-            if (ObjectRef != item)
+            if (ObjectRef == item)
             {
-                if (HasObject)
-                {
-                    Clear();
-                }
-
-                SetObject(item, item.Data.ItemImage);
-
-                if (item is IStackableItem stackableItem)
-                {
-                    stackableItem.StackChanged += RefreshCountText;
-                }
-
-                if (item.Data is ICooldownable cooldownable)
-                {
-                    Get<UI_CooldownImage>((int)CooldownImages.CooldownImage).SetCooldown(cooldownable.Cooldown);
-                }
-
-                RefreshCountText();
+                return;
             }
+
+            if (HasObject)
+            {
+                Clear();
+            }
+
+            SetObject(item, item.Data.ItemImage);
+
+            if (item is IStackableItem stackableItem)
+            {
+                stackableItem.StackChanged += RefreshCountText;
+            }
+
+            if (item.Data is ICooldownable cooldownable)
+            {
+                Get<UI_CooldownImage>((int)CooldownImages.CooldownImage).SetCooldown(cooldownable.Cooldown);
+            }
+
+            RefreshCountText();
         }
         else
         {

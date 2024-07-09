@@ -67,9 +67,14 @@ public class UI_Interaction : UI_Auto
             bool canInteract = target.CanInteract;
             GetImage((int)Images.BG).gameObject.SetActive(canInteract);
             GetText((int)Texts.KeyText).gameObject.SetActive(canInteract);
-            GetText((int)Texts.InteractionText).gameObject.SetActive(canInteract);
-            GetText((int)Texts.InteractionText).text = target.InteractionMessage;
-            GetText((int)Texts.NameText).text = target.InteractionName;
+
+            var interactionText = GetText((int)Texts.InteractionText);
+            interactionText.text = target.InteractionMessage;
+            interactionText.gameObject.SetActive(canInteract);
+
+            var name = GetText((int)Texts.NameText);
+            name.text = target.InteractionName;
+            name.gameObject.SetActive(!string.IsNullOrEmpty(target.InteractionName));
 
             bool hasLoadingtime = target.LoadingTime > 0f;
             GetImage((int)Images.LoadingTimeImage).gameObject.SetActive(hasLoadingtime);

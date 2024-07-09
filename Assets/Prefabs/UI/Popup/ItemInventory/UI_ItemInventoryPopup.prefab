@@ -915,7 +915,7 @@ MonoBehaviour:
   <IsHelper>k__BackingField: 0
   <IsSelfish>k__BackingField: 0
   <IgnoreSelfish>k__BackingField: 0
-  <Body>k__BackingField: {fileID: 6719826678423809750}
+  <PopupRT>k__BackingField: {fileID: 6719826678423809750}
   <DefaultPosition>k__BackingField: {x: 400, y: 0, z: 0}
   _tabShowedXPosition: -60
   _tabClosedXPosition: -50

@@ -11,7 +11,7 @@ public class SingletonScriptableObject<T> : ScriptableObject where T : Scriptabl
         {
             if (s_instance == null)
             {
-                T[] assets = Resources.LoadAll<T>("");
+                var assets = Resources.LoadAll<T>("");
                 if (assets == null || assets.Length == 0)
                 {
                     throw new Exception($"Could not find any singleton scriptable object instance in the resources : {typeof(T)}");

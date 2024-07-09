@@ -50,7 +50,9 @@ public class Inventory
             RemoveItem(index);
         }
 
-        var newItem = itemData is StackableItemData stackableItemData ? stackableItemData.CreateItem(count) : itemData.CreateItem();
+        var newItem = itemData is StackableItemData stackableItemData
+            ? stackableItemData.CreateItem(count)
+            : itemData.CreateItem();
         _items[index] = newItem;
         _indexes.Add(newItem, index);
         Count++;
@@ -109,15 +111,7 @@ public class Inventory
             return -1;
         }
 
-        return _items.FindIndex(startIndex, item =>
-        {
-            if (item == null)
-            {
-                return false;
-            }
-
-            return item.Data.Equals(itemData);
-        });
+        return _items.FindIndex(startIndex, item => item != null && item.Data.Equals(itemData));
     }
 
     public bool IsEmptyIndex(int index)
@@ -140,24 +134,24 @@ public class Inventory
         return _items.FindIndex(startIndex, item => item == null);
     }
 
-    public void SwapItem(int index1, int index2)
+    public void SwapItem(int indexA, int indexB)
     {
-        if (!IsIndexInRange(index1) || !IsIndexInRange(index2))
+        if (!IsIndexInRange(indexA) || !IsIndexInRange(indexB))
         {
             return;
         }
 
-        if (_items[index1] != null)
+        if (_items[indexA] != null)
         {
-            _indexes[_items[index1]] = index2;
+            _indexes[_items[indexA]] = indexB;
         }
 
-        if (_items[index2] != null)
+        if (_items[indexB] != null)
         {
-            _indexes[_items[index2]] = index1;
+            _indexes[_items[indexB]] = indexA;
         }
 
-        (_items[index1], _items[index2]) = (_items[index2], _items[index1]);
+        (_items[indexA], _items[indexB]) = (_items[indexB], _items[indexA]);
     }
 
     public void AddCapacity(int capacity)
@@ -171,15 +165,15 @@ public class Inventory
         _items.AddRange(nullItems);
     }
 
+    public bool IsIndexInRange(int index)
+    {
+        return index >= 0 && index < _items.Count;
+    }
+
     public void Clear()
     {
         Count = 0;
         _items.Clear();
         _indexes.Clear();
-    }
-
-    private bool IsIndexInRange(int index)
-    {
-        return index >= 0 && index < _items.Count;
     }
 }

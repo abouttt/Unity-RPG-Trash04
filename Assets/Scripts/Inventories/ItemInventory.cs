@@ -33,6 +33,11 @@ public class ItemInventory : MonoBehaviour
         }
 
         var inventory = _inventories[itemData.ItemType];
+        if (inventory.Count == inventory.Capacity)
+        {
+            return count;
+        }
+
         var stackableItemData = itemData as StackableItemData;
         bool isStackable = stackableItemData != null;
 
@@ -92,9 +97,8 @@ public class ItemInventory : MonoBehaviour
         }
 
         var itemType = item.Data.ItemType;
-        var inventory = _inventories[itemType];
-        int index = inventory.GetItemIndex(item);
-        if (inventory.RemoveItem(index))
+        int index = _inventories[itemType].GetItemIndex(item);
+        if (_inventories[itemType].RemoveItem(index))
         {
             InventoryChanged?.Invoke(itemType, index);
         }
@@ -141,13 +145,12 @@ public class ItemInventory : MonoBehaviour
             return;
         }
 
-        var inventory = _inventories[itemType];
-        if (inventory.IsEmptyIndex(fromIndex) || !inventory.IsEmptyIndex(toIndex))
+        if (_inventories[itemType].IsEmptyIndex(fromIndex) || !_inventories[itemType].IsEmptyIndex(toIndex))
         {
             return;
         }
 
-        var fromItem = inventory.GetItem<StackableItem>(fromIndex);
+        var fromItem = _inventories[itemType].GetItem<StackableItem>(fromIndex);
         if (fromItem == null)
         {
             return;
@@ -172,6 +175,11 @@ public class ItemInventory : MonoBehaviour
 
     public int GetItemIndex(Item item)
     {
+        if (item == null)
+        {
+            return -1;
+        }
+
         return _inventories[item.Data.ItemType].GetItemIndex(item);
     }
 

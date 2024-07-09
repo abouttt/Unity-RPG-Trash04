@@ -78,7 +78,7 @@ public class Interactor : MonoBehaviour
                 ProgressedLoadingTime += Time.deltaTime;
                 if (ProgressedLoadingTime >= _target.LoadingTime)
                 {
-                    ProgressedLoadingTime = 0;
+                    ProgressedLoadingTime = 0f;
                     _target.Interact();
                 }
             }
@@ -110,8 +110,8 @@ public class Interactor : MonoBehaviour
 
             if (_target.gameObject != other.gameObject)
             {
-                var distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
-                var distanceToOther = Vector3.Distance(transform.position, other.transform.position);
+                float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
+                float distanceToOther = Vector3.Distance(transform.position, other.transform.position);
                 if (distanceToTarget <= distanceToOther)
                 {
                     return;
