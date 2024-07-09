@@ -148,6 +148,18 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
 
     private void OnDropItemSlot(UI_ItemSlot otherItemSlot)
     {
-        Player.ItemInventory.MoveItem(ItemType, otherItemSlot.Index, Index);
+        var otherItem = otherItemSlot.ObjectRef as Item;
+        if (!HasObject && otherItem is IStackableItem otherStackableItem && otherStackableItem.Count > 1)
+        {
+            var splitPopup = Managers.UI.Show<UI_ItemSplitPopup>();
+            splitPopup.SetEvent(() =>
+                Player.ItemInventory.SplitItem(ItemType, otherItemSlot.Index, Index, splitPopup.Count),
+                $"[{otherItem.Data.ItemName}] 아이템 나누기", 1, otherStackableItem.Count);
+        }
+        else
+        {
+            Player.ItemInventory.MoveItem(ItemType, otherItemSlot.Index, Index);
+        }
+
     }
 }

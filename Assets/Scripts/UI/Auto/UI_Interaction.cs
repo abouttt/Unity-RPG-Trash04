@@ -26,14 +26,13 @@ public class UI_Interaction : UI_Auto
 
         _interactor = Player.Interactor;
         _followTarget = GetComponent<UI_FollowWorldObject>();
-
-        GetText((int)Texts.KeyText).text = Managers.Input.GetBindingPath("Interact");
     }
 
     protected override void Start()
     {
         base.Start();
 
+        GetText((int)Texts.KeyText).text = Managers.Input.GetBindingPath("Interact");
         _interactor.TargetChanged += target => SetTarget(target);
     }
 
