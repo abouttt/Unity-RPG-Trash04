@@ -95,7 +95,7 @@ public class UI_ItemTooltip : UI_BaseTooltip
     {
         SB.Clear();
 
-        if (itemData is ILimitLevelableItemData limitLevelableItemData)
+        if (itemData is ILimitLevelable limitLevelableItemData)
         {
             SB.Append($"제한 레벨 : {limitLevelableItemData.LimitLevel}\n");
         }

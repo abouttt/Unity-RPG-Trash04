@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ConsumableItem : StackableItem, IUsableItem
+public abstract class ConsumableItem : StackableItem, IUsable
 {
     public ConsumableItemData ConsumableData { get; private set; }
 

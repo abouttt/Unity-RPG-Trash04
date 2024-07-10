@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public abstract class StackableItem : Item, IStackableItem
+public abstract class StackableItem : Item, IStackable
 {
     public event Action StackChanged;
 

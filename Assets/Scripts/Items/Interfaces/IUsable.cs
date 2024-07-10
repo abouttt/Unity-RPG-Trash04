@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public interface IUsableItem : IItem
+public interface IUsable
 {
     bool Use();
     bool CanUse();

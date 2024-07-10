@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Item/Equipment", fileName = "Item_Equipment_")]
-public class EquipmentItemData : ItemData, ILimitLevelableItemData
+public class EquipmentItemData : ItemData, ILimitLevelable
 {
     [field: Header("Equipment Data")]
 

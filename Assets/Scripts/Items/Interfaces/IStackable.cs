@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public interface IStackableItem : IItem
+public interface IStackable
 {
     public event Action StackChanged;
 

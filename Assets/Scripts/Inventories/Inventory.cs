@@ -17,11 +17,16 @@ public class Inventory
     private List<Item> _items;
     private readonly Dictionary<Item, int> _indexes = new();
 
-    public void Init()
+    public void Init(int capacity = -1)
     {
         if (_items != null)
         {
             return;
+        }
+
+        if (capacity > 0)
+        {
+            Capacity = capacity;
         }
 
         var nullItems = Enumerable.Repeat<Item>(null, Capacity);
