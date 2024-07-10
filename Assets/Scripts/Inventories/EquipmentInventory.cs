@@ -12,19 +12,19 @@ public class EquipmentInventory : MonoBehaviour
         _inventory.Init(Enum.GetValues(typeof(EquipmentType)).Length);
     }
 
-    public void Equip(EquipmentItemData equipmentItemData)
+    public void EquipItem(EquipmentItemData equipmentItemData)
     {
         var equipmentType = equipmentItemData.EquipmentType;
         if (IsEquipped(equipmentType))
         {
-            Unequip(equipmentType);
+            UnequipItem(equipmentType);
         }
 
         _inventory.SetItem(equipmentItemData, (int)equipmentType, 1);
         InventoryChanged?.Invoke(equipmentType);
     }
 
-    public void Unequip(EquipmentType equipmentType)
+    public void UnequipItem(EquipmentType equipmentType)
     {
         if (!IsEquipped(equipmentType))
         {

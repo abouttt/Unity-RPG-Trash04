@@ -145,27 +145,25 @@ public class ItemInventory : MonoBehaviour
             return;
         }
 
-        if (_inventories[itemType].IsEmptyIndex(fromIndex) || !_inventories[itemType].IsEmptyIndex(toIndex))
+        var inventory = _inventories[itemType];
+        if (inventory.IsEmptyIndex(fromIndex) || !inventory.IsEmptyIndex(toIndex))
         {
             return;
         }
 
-        var fromItem = _inventories[itemType].GetItem<StackableItem>(fromIndex);
+        var fromItem = inventory.GetItem<StackableItem>(fromIndex);
         if (fromItem == null)
         {
             return;
         }
 
-        int nextCount = fromItem.Count - count;
-        if (nextCount == 0)
+        fromItem.Count -= count;
+        if (fromItem.IsEmpty)
         {
-            SwapItem(itemType, fromIndex, toIndex);
+            RemoveItem(itemType, fromIndex);
         }
-        else if (nextCount > 0)
-        {
-            fromItem.Count = nextCount;
-            SetItem(fromItem.StackableData, toIndex, count);
-        }
+
+        SetItem(fromItem.StackableData, toIndex, count);
     }
 
     public T GetItem<T>(ItemType itemType, int index) where T : Item

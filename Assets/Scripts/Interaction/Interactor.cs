@@ -5,35 +5,7 @@ public class Interactor : MonoBehaviour
 {
     public event Action<Interactable> TargetChanged;
 
-    public Interactable Target
-    {
-        get => _target;
-        private set
-        {
-            if (_target == value)
-            {
-                return;
-            }
-
-            if (_target != null)
-            {
-                _target.IsDetected = false;
-            }
-
-            ProgressedLoadingTime = 0f;
-            _target = value;
-            _isTargetRangeOut = false;
-            _canInteract = false;
-
-            if (_target != null)
-            {
-                _target.IsDetected = true;
-            }
-
-            TargetChanged?.Invoke(_target);
-        }
-    }
-
+    public Interactable Target { get; private set; }
     public bool Interact { get; set; }
     public float ProgressedLoadingTime { get; private set; }
 
@@ -43,31 +15,30 @@ public class Interactor : MonoBehaviour
     [field: SerializeField]
     public LayerMask ObstacleLayers { get; set; }
 
-    private Interactable _target;
     private bool _canInteract;
     private bool _isTargetRangeOut;
 
     private void LateUpdate()
     {
-        if (_target == null)
+        if (Target == null)
         {
             return;
         }
 
-        if (!_target.gameObject.activeSelf)
+        if (!Target.gameObject.activeSelf)
         {
-            Target = null;
+            SetTarget(null);
             return;
         }
 
-        if (_target.IsInteracted)
+        if (Target.IsInteracted)
         {
             return;
         }
 
         if (_isTargetRangeOut)
         {
-            Target = null;
+            SetTarget(null);
             return;
         }
 
@@ -76,10 +47,10 @@ public class Interactor : MonoBehaviour
             if (_canInteract)
             {
                 ProgressedLoadingTime += Time.deltaTime;
-                if (ProgressedLoadingTime >= _target.LoadingTime)
+                if (ProgressedLoadingTime >= Target.LoadingTime)
                 {
                     ProgressedLoadingTime = 0f;
-                    _target.Interact();
+                    Target.Interact();
                 }
             }
         }
@@ -97,20 +68,20 @@ public class Interactor : MonoBehaviour
             return;
         }
 
-        if (_target == null)
+        if (Target == null)
         {
-            Target = other.GetComponent<Interactable>();
+            SetTarget(other.GetComponent<Interactable>());
         }
         else
         {
-            if (_target.IsInteracted)
+            if (Target.IsInteracted)
             {
                 return;
             }
 
-            if (_target.gameObject != other.gameObject)
+            if (Target.gameObject != other.gameObject)
             {
-                float distanceToTarget = Vector3.Distance(transform.position, _target.transform.position);
+                float distanceToTarget = Vector3.Distance(transform.position, Target.transform.position);
                 float distanceToOther = Vector3.Distance(transform.position, other.transform.position);
                 if (distanceToTarget <= distanceToOther)
                 {
@@ -122,7 +93,7 @@ public class Interactor : MonoBehaviour
                     return;
                 }
 
-                Target = other.GetComponent<Interactable>();
+                SetTarget(other.GetComponent<Interactable>());
             }
         }
     }
@@ -134,18 +105,43 @@ public class Interactor : MonoBehaviour
             return;
         }
 
-        if (_target.gameObject != other.gameObject)
+        if (Target.gameObject != other.gameObject)
         {
             return;
         }
 
-        if (_target.IsInteracted)
+        if (Target.IsInteracted)
         {
             _isTargetRangeOut = true;
         }
         else
         {
-            Target = null;
+            SetTarget(null);
         }
+    }
+
+    private void SetTarget(Interactable target)
+    {
+        if (Target == target)
+        {
+            return;
+        }
+
+        if (Target != null)
+        {
+            Target.IsDetected = false;
+        }
+
+        ProgressedLoadingTime = 0f;
+        Target = target;
+        _isTargetRangeOut = false;
+        _canInteract = false;
+
+        if (Target != null)
+        {
+            Target.IsDetected = true;
+        }
+
+        TargetChanged?.Invoke(Target);
     }
 }

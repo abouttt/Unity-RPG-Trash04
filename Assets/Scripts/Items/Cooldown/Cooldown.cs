@@ -6,8 +6,8 @@ public class Cooldown
 {
     public event Action CooldownStarted;
 
-    public float MaxTime { get; private set; }
     public float RemainingTime { get; set; }
+    public float MaxTime { get; private set; }
 
     public void Start()
     {

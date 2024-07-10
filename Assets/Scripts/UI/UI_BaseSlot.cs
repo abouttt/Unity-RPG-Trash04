@@ -14,6 +14,7 @@ public abstract class UI_BaseSlot : UI_Base,
 
     [field: SerializeField]
     public SlotType SlotType { get; private set; }
+
     public object ObjectRef { get; private set; }
     public bool HasObject { get; private set; }
 

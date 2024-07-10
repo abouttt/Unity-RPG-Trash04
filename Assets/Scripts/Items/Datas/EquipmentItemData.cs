@@ -4,7 +4,6 @@ using UnityEngine;
 public class EquipmentItemData : ItemData, ILimitLevelable
 {
     [field: Header("Equipment Data")]
-
     [field: SerializeField]
     public int LimitLevel { get; private set; } = 1;
 

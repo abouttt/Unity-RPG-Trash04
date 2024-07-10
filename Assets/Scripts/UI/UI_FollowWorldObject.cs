@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class UI_FollowWorldObject : MonoBehaviour
 {
+    [field: SerializeField]
     public Transform Target { get; set; }
 
     [field: SerializeField]

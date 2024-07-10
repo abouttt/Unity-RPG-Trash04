@@ -3,7 +3,6 @@ using UnityEngine;
 public abstract class ConsumableItemData : StackableItemData, ILimitLevelable, ICooldownable
 {
     [field: Header("Consumable Data")]
-
     [field: SerializeField]
     public int LimitLevel { get; private set; } = 1;
 

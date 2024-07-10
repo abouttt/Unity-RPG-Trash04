@@ -20,7 +20,7 @@ public class EquipmentItem : Item, IUsable
         var equippedItem = Player.EquipmentInventory.GetItem(EquipmentData.EquipmentType);
         if (equippedItem == this)
         {
-            Player.EquipmentInventory.Unequip(EquipmentData.EquipmentType);
+            Player.EquipmentInventory.UnequipItem(EquipmentData.EquipmentType);
             Player.ItemInventory.AddItem(EquipmentData);
         }
         else
@@ -34,7 +34,7 @@ public class EquipmentItem : Item, IUsable
             {
                 Player.ItemInventory.RemoveItem(Data.ItemType, index);
             }
-            Player.EquipmentInventory.Equip(EquipmentData);
+            Player.EquipmentInventory.EquipItem(EquipmentData);
         }
 
         return true;

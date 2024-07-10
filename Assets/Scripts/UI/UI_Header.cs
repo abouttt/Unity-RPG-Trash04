@@ -8,6 +8,7 @@ public class UI_Header : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     [SerializeField]
     private RectTransform _target;  // 헤더를 잡고 움직이면 따라서 UI들도 움직이게 하기위한 중심 타겟.
+
     private Vector2 _beginPoint;    // 헤더를 잡은 시작 위치.
     private Vector2 _moveBegin;     // 잡고 움직인 시작 위치.
 
