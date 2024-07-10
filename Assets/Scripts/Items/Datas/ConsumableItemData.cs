@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ConsumableItemData : StackableItemData, ICooldownable
+public abstract class ConsumableItemData : StackableItemData, ILimitLevelableItemData, ICooldownable
 {
     [field: Header("Consumable Data")]
 

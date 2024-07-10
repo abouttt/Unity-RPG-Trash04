@@ -1299,7 +1299,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: <LoadingTime>k__BackingField
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.size
