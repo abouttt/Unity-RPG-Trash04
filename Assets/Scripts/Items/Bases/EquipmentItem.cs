@@ -26,6 +26,11 @@ public class EquipmentItem : Item, IUsable
         else
         {
             int index = Player.ItemInventory.GetItemIndex(this);
+            if (index == -1)
+            {
+                return false;
+            }
+
             if (equippedItem != null)
             {
                 Player.ItemInventory.SetItem(equippedItem.EquipmentData, index);
@@ -34,6 +39,7 @@ public class EquipmentItem : Item, IUsable
             {
                 Player.ItemInventory.RemoveItem(Data.ItemType, index);
             }
+
             Player.EquipmentInventory.EquipItem(EquipmentData);
         }
 

@@ -104,6 +104,7 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
     public override void OnPointerDown(PointerEventData eventData)
     {
         base.OnPointerDown(eventData);
+
         Managers.UI.Get<UI_ItemInventoryPopup>().SetTop();
     }
 
@@ -144,6 +145,9 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
                 case SlotType.Item:
                     OnDropItemSlot(otherSlot as UI_ItemSlot);
                     break;
+                case SlotType.Equipment:
+                    OnDropEquipmentSlot(otherSlot as UI_EquipmentSlot);
+                    break;
             }
         }
     }
@@ -151,17 +155,54 @@ public class UI_ItemSlot : UI_BaseSlot, IDropHandler
     private void OnDropItemSlot(UI_ItemSlot otherItemSlot)
     {
         var otherItem = otherItemSlot.ObjectRef as Item;
-        if (!HasObject && otherItem is IStackable otherStackable && otherStackable.Count > 1)
-        {
-            var splitPopup = Managers.UI.Show<UI_ItemSplitPopup>();
-            splitPopup.SetEvent(() =>
-                Player.ItemInventory.SplitItem(ItemType, otherItemSlot.Index, Index, splitPopup.Count),
-                $"[{otherItem.Data.ItemName}] 아이템 나누기", 1, otherStackable.Count);
-        }
-        else
+
+        if (HasObject)
         {
             Player.ItemInventory.MoveItem(ItemType, otherItemSlot.Index, Index);
         }
+        else
+        {
+            if (otherItem is IStackable otherStackable && otherStackable.Count > 1)
+            {
+                var splitPopup = Managers.UI.Show<UI_ItemSplitPopup>();
+                splitPopup.SetEvent(() =>
+                    Player.ItemInventory.SplitItem(ItemType, otherItemSlot.Index, Index, splitPopup.Count),
+                    $"[{otherItem.Data.ItemName}] 아이템 나누기", 1, otherStackable.Count);
+            }
+            else
+            {
+                Player.ItemInventory.MoveItem(ItemType, otherItemSlot.Index, Index);
+            }
+        }
+    }
 
+    private void OnDropEquipmentSlot(UI_EquipmentSlot otherEquipmentSlot)
+    {
+        var otherEquipmentItem = otherEquipmentSlot.ObjectRef as EquipmentItem;
+
+        if (HasObject)
+        {
+            if (ObjectRef is not EquipmentItem equipmentItem)
+            {
+                return;
+            }
+
+            if (equipmentItem.EquipmentData.EquipmentType != otherEquipmentItem.EquipmentData.EquipmentType)
+            {
+                return;
+            }
+
+            if (equipmentItem is not IUsable usable)
+            {
+                return;
+            }
+
+            usable.Use();
+        }
+        else
+        {
+            Player.EquipmentInventory.UnequipItem(otherEquipmentSlot.EquipmentType);
+            Player.ItemInventory.SetItem(otherEquipmentItem.Data, Index);
+        }
     }
 }

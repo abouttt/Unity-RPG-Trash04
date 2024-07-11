@@ -187,6 +187,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "EquipmentInventory",
+                    "type": "Button",
+                    "id": "2bdd1db0-c0dd-4ab7-bcb6-6dde97bb6ac9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "CursorToggle",
                     "type": "Button",
                     "id": "78687c0f-7b77-475d-92fa-4601b6524e1f",
@@ -236,6 +245,17 @@
                     "processors": "",
                     "groups": "Keyboard/Mouse",
                     "action": "CursorToggle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7483b024-07bf-43d5-898d-2afcdfd76913",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard/Mouse",
+                    "action": "EquipmentInventory",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

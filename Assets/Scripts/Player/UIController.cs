@@ -23,6 +23,11 @@ public class UIController : MonoBehaviour, GameControls.IUIActions
         ShowOrClosePopup<UI_ItemInventoryPopup>(context);
     }
 
+    public void OnEquipmentInventory(InputAction.CallbackContext context)
+    {
+        ShowOrClosePopup<UI_EquipmentInventoryPopup>(context);
+    }
+
     public void OnCursorToggle(InputAction.CallbackContext context)
     {
         if (context.performed)
