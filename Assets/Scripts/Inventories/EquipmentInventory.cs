@@ -42,6 +42,6 @@ public class EquipmentInventory : MonoBehaviour
 
     public bool IsEquipped(EquipmentType equipmentType)
     {
-        return _inventory.IsEmptyIndex((int)equipmentType);
+        return !_inventory.IsEmptyIndex((int)equipmentType);
     }
 }
