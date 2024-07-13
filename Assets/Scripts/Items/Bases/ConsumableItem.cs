@@ -26,4 +26,10 @@ public abstract class ConsumableItem : StackableItem, IUsable
 
         return true;
     }
+
+    protected void SubtractCountAndStartCooldown()
+    {
+        Count -= ConsumableData.RequiredCount;
+        Managers.Cooldown.AddCooldown(ConsumableData.Cooldown);
+    }
 }

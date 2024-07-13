@@ -24,3 +24,4 @@ MonoBehaviour:
   <Cooldown>k__BackingField:
     <MaxTime>k__BackingField: 1
     <RemainingTime>k__BackingField: 0
+  <HealAmount>k__BackingField: 100
