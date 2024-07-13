@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Item_Consumable_HP_Potion
   m_EditorClassIdentifier: 
   <ItemId>k__BackingField: CONSUMABLE_HP_POTION
-  <ItemName>k__BackingField: "\uCCB4\uB825 \uD3EC\uC158"
+  <ItemName>k__BackingField: "\uCCB4\uB825 \uC544\uC774\uD15C"
   <ItemImage>k__BackingField: {fileID: 21300000, guid: e52ea25af699fd445b7046374f81a5b9, type: 3}
   <ItemType>k__BackingField: 1
   <ItemRarity>k__BackingField: 0
-  <Description>k__BackingField: "\uCCB4\uB825\uC740 \uD68C\uBCF5\uD55C\uB2E4."
+  <Description>k__BackingField: "\uCCB4\uB825\uC744 \uD68C\uBCF5\uD55C\uB2E4."
   <MaxCount>k__BackingField: 99
   <LimitLevel>k__BackingField: 1
   <RequiredCount>k__BackingField: 1

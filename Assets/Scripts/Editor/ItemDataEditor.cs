@@ -23,6 +23,11 @@ public class ItemDataEditor : Editor
         if (!originalItemId.Equals(newItemId))
         {
             _itemIdProp.stringValue = newItemId;
+            var itemData = ItemDatabase.Instance.FindItemById(newItemId);
+            if (itemData != null)
+            {
+                Debug.LogWarning($"{newItemId} id already exist : {AssetDatabase.GetAssetPath(itemData)}");
+            }
         }
 
         serializedObject.ApplyModifiedProperties();
