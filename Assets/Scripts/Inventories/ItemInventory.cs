@@ -7,10 +7,10 @@ public class ItemInventory : MonoBehaviour
 {
     public event Action<ItemType, int> InventoryChanged;
 
-    public IReadOnlyDictionary<ItemType, Inventory> Inventories => _inventories;
+    public IReadOnlyDictionary<ItemType, Inventory<Item>> Inventories => _inventories;
 
     [SerializeField, SerializedDictionary("Item Type", "Inventory")]
-    private SerializedDictionary<ItemType, Inventory> _inventories;
+    private SerializedDictionary<ItemType, Inventory<Item>> _inventories;
 
     private void Awake()
     {
@@ -51,7 +51,7 @@ public class ItemInventory : MonoBehaviour
                     break;
                 }
 
-                int sameItemIndex = inventory.FindSameItemIndex(stackableItemData, index);
+                int sameItemIndex = FindSameItemIndex(index, stackableItemData);
                 if (sameItemIndex != -1)
                 {
                     var sameItem = inventory.GetItem<StackableItem>(sameItemIndex);
@@ -114,7 +114,10 @@ public class ItemInventory : MonoBehaviour
 
     public void SetItem(ItemData itemData, int index, int count = 1)
     {
-        if (_inventories[itemData.ItemType].SetItem(itemData, index, count))
+        var newItem = itemData is StackableItemData stackableItemData
+            ? stackableItemData.CreateItem(count)
+            : itemData.CreateItem();
+        if (_inventories[itemData.ItemType].SetItem(newItem, index, count))
         {
             InventoryChanged?.Invoke(itemData.ItemType, index);
         }
@@ -179,6 +182,11 @@ public class ItemInventory : MonoBehaviour
         }
 
         return _inventories[item.Data.ItemType].GetItemIndex(item);
+    }
+
+    public int FindSameItemIndex(int startIndex, ItemData itemData)
+    {
+        return _inventories[itemData.ItemType].FindSameItemIndex(startIndex, item => item != null && item.Data.Equals(itemData));
     }
 
     private void SwapItem(ItemType itemType, int fromIndex, int toIndex)

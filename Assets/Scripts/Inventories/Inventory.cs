@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class Inventory
+public class Inventory<T> where T : class
 {
     [field: SerializeField]
     public int Capacity { get; private set; }
@@ -12,10 +12,10 @@ public class Inventory
     [field: SerializeField, ReadOnly]
     public int Count { get; private set; }
 
-    public IReadOnlyList<Item> Items => _items;
+    public IReadOnlyList<T> Items => _items;
 
-    private List<Item> _items;
-    private readonly Dictionary<Item, int> _indexes = new();
+    private List<T> _items;
+    private readonly Dictionary<T, int> _indexes = new();
 
     public void Init(int capacity = -1)
     {
@@ -29,13 +29,13 @@ public class Inventory
             Capacity = capacity;
         }
 
-        var nullItems = Enumerable.Repeat<Item>(null, Capacity);
+        var nullItems = Enumerable.Repeat<T>(null, Capacity);
         _items = new(nullItems);
     }
 
-    public bool SetItem(ItemData itemData, int index, int count)
+    public bool SetItem(T item, int index, int count)
     {
-        if (itemData == null)
+        if (item == null)
         {
             return false;
         }
@@ -55,11 +55,8 @@ public class Inventory
             RemoveItem(index);
         }
 
-        var newItem = itemData is StackableItemData stackableItemData
-            ? stackableItemData.CreateItem(count)
-            : itemData.CreateItem();
-        _items[index] = newItem;
-        _indexes.Add(newItem, index);
+        _items[index] = item;
+        _indexes.Add(item, index);
         Count++;
 
         return true;
@@ -84,17 +81,17 @@ public class Inventory
         return true;
     }
 
-    public T GetItem<T>(int index) where T : Item
+    public U GetItem<U>(int index) where U : class, T
     {
         if (!IsIndexInRange(index))
         {
             return null;
         }
 
-        return _items[index] as T;
+        return _items[index] as U;
     }
 
-    public int GetItemIndex(Item item)
+    public int GetItemIndex(T item)
     {
         if (_indexes.TryGetValue(item, out var index))
         {
@@ -104,19 +101,14 @@ public class Inventory
         return -1;
     }
 
-    public int FindSameItemIndex(ItemData itemData, int startIndex = 0)
+    public int FindSameItemIndex(int startIndex, Predicate<T> logic)
     {
-        if (itemData == null)
-        {
-            return -1;
-        }
-
         if (!IsIndexInRange(startIndex))
         {
             return -1;
         }
 
-        return _items.FindIndex(startIndex, item => item != null && item.Data.Equals(itemData));
+        return _items.FindIndex(startIndex, logic);
     }
 
     public bool IsEmptyIndex(int index)
@@ -166,7 +158,7 @@ public class Inventory
             return;
         }
 
-        var nullItems = Enumerable.Repeat<Item>(null, capacity);
+        var nullItems = Enumerable.Repeat<T>(null, capacity);
         _items.AddRange(nullItems);
     }
 

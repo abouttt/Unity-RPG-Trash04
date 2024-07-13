@@ -5,7 +5,7 @@ public class EquipmentInventory : MonoBehaviour
 {
     public event Action<EquipmentType> InventoryChanged;
 
-    private readonly Inventory _inventory = new();
+    private readonly Inventory<EquipmentItem> _inventory = new();
 
     private void Awake()
     {
@@ -20,7 +20,8 @@ public class EquipmentInventory : MonoBehaviour
             UnequipItem(equipmentType);
         }
 
-        _inventory.SetItem(equipmentItemData, (int)equipmentType, 1);
+        var newEquipmentItem = equipmentItemData.CreateItem() as EquipmentItem;
+        _inventory.SetItem(newEquipmentItem, (int)equipmentType, 1);
         InventoryChanged?.Invoke(equipmentType);
     }
 
