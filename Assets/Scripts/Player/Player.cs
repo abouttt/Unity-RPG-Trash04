@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
     public static Interactor Interactor { get; private set; }
     public static ItemInventory ItemInventory { get; private set; }
     public static EquipmentInventory EquipmentInventory { get; private set; }
+    public static QuickInventory QuickInventory { get; private set; }
 
     [SerializeField]
     private float _runSpeed;
@@ -45,15 +46,17 @@ public class Player : MonoBehaviour, GameControls.IPlayerActions
 
     private void Awake()
     {
-        _mainCamera = Camera.main;
-        _animator = GetComponent<Animator>();
-        _movement = GetComponent<CharacterMovement>();
-        _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
         GameObject = gameObject;
         LockOn = GetComponent<LockOn>();
         Interactor = GetComponentInChildren<Interactor>();
         ItemInventory = GetComponent<ItemInventory>();
         EquipmentInventory = GetComponent<EquipmentInventory>();
+        QuickInventory = GetComponent<QuickInventory>();
+
+        _mainCamera = Camera.main;
+        _animator = GetComponent<Animator>();
+        _movement = GetComponent<CharacterMovement>();
+        _thirdPersonCamera = GetComponent<ThirdPersonCamera>();
     }
 
     private void Start()

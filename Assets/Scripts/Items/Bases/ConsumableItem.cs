@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class ConsumableItem : StackableItem, IUsable
+public abstract class ConsumableItem : StackableItem, IUsable, IQuickable
 {
     public ConsumableItemData ConsumableData { get; private set; }
 
@@ -10,7 +10,23 @@ public abstract class ConsumableItem : StackableItem, IUsable
         ConsumableData = data;
     }
 
-    public abstract bool Use();
+    public virtual bool Use()
+    {
+        if (!CanUse())
+        {
+            return false;
+        }
+
+        Count -= ConsumableData.RequiredCount;
+        if (IsEmpty)
+        {
+            Player.ItemInventory.RemoveItem(this);
+        }
+
+        Managers.Cooldown.AddCooldown(ConsumableData.Cooldown);
+
+        return true;
+    }
 
     public bool CanUse()
     {
@@ -27,9 +43,8 @@ public abstract class ConsumableItem : StackableItem, IUsable
         return true;
     }
 
-    protected void SubtractCountAndStartCooldown()
+    public bool UseQuick()
     {
-        Count -= ConsumableData.RequiredCount;
-        Managers.Cooldown.AddCooldown(ConsumableData.Cooldown);
+        return Use();
     }
 }

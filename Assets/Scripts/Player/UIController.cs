@@ -28,6 +28,21 @@ public class UIController : MonoBehaviour, GameControls.IUIActions
         ShowOrClosePopup<UI_EquipmentInventoryPopup>(context);
     }
 
+    public void OnQuick(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            if (Managers.UI.IsShowedHelperPopup || Managers.UI.IsShowedSelfishPopup)
+            {
+                return;
+            }
+
+            int index = (int)context.ReadValue<float>();
+            var quickable = Player.QuickInventory.GetQuickable(index);
+            quickable?.UseQuick();
+        }
+    }
+
     public void OnCursorToggle(InputAction.CallbackContext context)
     {
         if (context.performed)

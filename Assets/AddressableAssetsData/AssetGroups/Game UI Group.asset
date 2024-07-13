@@ -41,6 +41,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Game_UI
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 97bb0fd74f394ac499f2f26c39738724
+    m_Address: UI_QuickSlot.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Game_UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1f2a7dde5bfec7348a024238c6d15fb7, type: 2}
   m_SchemaSet:

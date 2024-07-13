@@ -12,12 +12,11 @@ public class HPPotion : ConsumableItem
 
     public override bool Use()
     {
-        if (!CanUse())
+        if (!base.Use())
         {
             return false;
         }
 
-        SubtractCountAndStartCooldown();
         Debug.Log($"Use HP Potion : {HPPotionData.HealAmount}");
 
         return true;

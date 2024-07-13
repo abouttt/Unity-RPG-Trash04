@@ -27,8 +27,15 @@ public class CooldownManager
 
     public void AddCooldown(Cooldown cooldown)
     {
-        cooldown.Start();
-        _cooldowns.Add(cooldown);
+        if (cooldown == null)
+        {
+            return;
+        }
+
+        if (_cooldowns.Add(cooldown))
+        {
+            cooldown.Start();
+        }
     }
 
     public void Clear()

@@ -19,14 +19,30 @@ public class QuickInventory : MonoBehaviour
     {
         if (_inventory.SetItem(quickable, index, 1))
         {
+            if (quickable is Item item)
+            {
+                item.Destroyed -= OnItemDestroyed;
+                item.Destroyed += OnItemDestroyed;
+            }
+
             InventoryChanged?.Invoke(index);
         }
     }
 
     public void RemoveQuickable(int index)
     {
+        var quickable = _inventory[index];
+
         if (_inventory.RemoveItem(index))
         {
+            if (quickable is Item item)
+            {
+                if (!_inventory.IsIncluded(quickable))
+                {
+                    item.Destroyed -= OnItemDestroyed;
+                }
+            }
+
             InventoryChanged?.Invoke(index);
         }
     }
@@ -41,5 +57,14 @@ public class QuickInventory : MonoBehaviour
         _inventory.SwapItem(indexA, indexB);
         InventoryChanged?.Invoke(indexA);
         InventoryChanged?.Invoke(indexB);
+    }
+
+    private void OnItemDestroyed(Item item)
+    {
+        var indexes = _inventory.GetItemAllIndex(item as IQuickable);
+        foreach (var index in indexes)
+        {
+            RemoveQuickable(index);
+        }
     }
 }

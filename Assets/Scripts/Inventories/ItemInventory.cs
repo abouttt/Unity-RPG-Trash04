@@ -100,16 +100,15 @@ public class ItemInventory : MonoBehaviour
         int index = _inventories[itemType].GetItemIndex(item);
         if (_inventories[itemType].RemoveItem(index))
         {
+            item.Destroy();
             InventoryChanged?.Invoke(itemType, index);
         }
     }
 
     public void RemoveItem(ItemType itemType, int index)
     {
-        if (_inventories[itemType].RemoveItem(index))
-        {
-            InventoryChanged?.Invoke(itemType, index);
-        }
+        var item = GetItem<Item>(itemType, index);
+        RemoveItem(item);
     }
 
     public void SetItem(ItemData itemData, int index, int count = 1)
@@ -160,13 +159,16 @@ public class ItemInventory : MonoBehaviour
             return;
         }
 
-        fromItem.Count -= count;
-        if (fromItem.IsEmpty)
+        int remainingCount = fromItem.Count - count;
+        if (remainingCount == 0)
         {
-            RemoveItem(itemType, fromIndex);
+            SwapItem(itemType, fromIndex, toIndex);
         }
-
-        SetItem(fromItem.StackableData, toIndex, count);
+        else if (remainingCount > 0)
+        {
+            fromItem.Count = remainingCount;
+            SetItem(fromItem.StackableData, toIndex, count);
+        }
     }
 
     public T GetItem<T>(ItemType itemType, int index) where T : Item
