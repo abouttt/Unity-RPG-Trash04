@@ -904,6 +904,7 @@ GameObject:
   - component: {fileID: 1025324158}
   - component: {fileID: 1025324161}
   - component: {fileID: 1025324163}
+  - component: {fileID: 1025324164}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1108,6 +1109,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13558c7c207f0b143b06f623674e6b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1025324164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025324151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8faf963a236cb7648ae341a142dbbb46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <Capacity>k__BackingField: 10
 --- !u!1 &1043920662
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,7 +1330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.data[0].Key
@@ -1333,6 +1347,10 @@ PrefabInstance:
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.data[3].Key
       value: 
+      objectReference: {fileID: 11400000, guid: e560451a6028448449e3fbb868920a2c, type: 2}
+    - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
+      propertyPath: _items._serializedList.Array.data[4].Key
+      value: 
       objectReference: {fileID: 11400000, guid: 927a70c6bc5ba674481e43b572d46d1a, type: 2}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.data[0].Value
@@ -1348,6 +1366,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
       propertyPath: _items._serializedList.Array.data[3].Value
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6978378963472382187, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
+      propertyPath: _items._serializedList.Array.data[4].Value
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8450913178325831794, guid: 50f11cb788cb4424a82299f973bfd367, type: 3}
