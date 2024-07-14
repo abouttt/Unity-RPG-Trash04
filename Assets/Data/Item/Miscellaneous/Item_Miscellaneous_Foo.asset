@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33969341df0298d4fa5d3a78f7a0df5f, type: 3}
   m_Name: Item_Miscellaneous_Foo
   m_EditorClassIdentifier: 
-  <ItemId>k__BackingField: MISCELLANEOUS_FOO
+  <ItemId>k__BackingField: ITEM_MISCELLANEOUS_FOO
   <ItemName>k__BackingField: foo
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 9f69b220176e6964fbd87f5f158d45e3, type: 3}
   <ItemType>k__BackingField: 2

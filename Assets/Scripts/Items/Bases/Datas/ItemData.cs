@@ -23,7 +23,7 @@ public abstract class ItemData : ScriptableObject
     public ItemData(ItemType itemType)
     {
         ItemType = itemType;
-        ItemId = $"{itemType}_".ToUpper();
+        ItemId = $"ITEM_{itemType}_".ToUpper();
     }
 
     public abstract Item CreateItem();
